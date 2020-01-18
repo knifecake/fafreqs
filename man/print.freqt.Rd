@@ -7,14 +7,17 @@
 \method{print}{freqt}(x, ...)
 }
 \arguments{
-\item{x}{a `freqt` object}
+\item{x}{a \code{\link{freqt}} object}
 
 \item{...}{further parameters}
 }
 \description{
-Print a `freqt` object
+Print a \code{\link{freqt}} object
 }
 \details{
-This first calls [as.data.frame.freqt()] and then prints the resulting
-`data.frame`. The `data.frame` is returned invisibly.
+This first calls \code{\link{as.data.frame.freqt}} and then prints the resulting
+\code{\link{data.frame}}. The \code{data.frame} is returned invisibly.
+}
+\seealso{
+\code{\link{as.data.frame.freqt}}
 }

@@ -2,19 +2,20 @@
 % Please edit documentation in R/freqt.R
 \name{freqt}
 \alias{freqt}
-\title{Create a `freqt` object}
+\title{Create a \code{freqt} object}
 \usage{
 freqt(x, name = "")
 }
 \arguments{
-\item{x}{a `data.frame` where cell (i, j) contains the frequency of allele j
-of marker i. The row names of `x` should be the marker names.}
+\item{x}{a \code{\link{data.frame}} where cell \code{(i, j)} contains the
+frequency of allele \code{j} of marker \code{i}. The row names of \code{x}
+should be the marker names.}
 
 \item{name}{(optional, default = "") the name of the frequency database}
 }
 \value{
-a `freqt` objet
+a \code{freqt} objet
 }
 \description{
-Create a `freqt` object
+Create a \code{freqt} object
 }

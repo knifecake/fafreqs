@@ -2,12 +2,12 @@
 % Please edit documentation in R/freqt.R
 \name{as.data.frame.freqt}
 \alias{as.data.frame.freqt}
-\title{Convert a `freqt` to a `data.frame`}
+\title{Convert a \code{\link{freqt}} to a \code{\link{data.frame}}}
 \usage{
 \method{as.data.frame}{freqt}(x, ..., markers = NULL)
 }
 \arguments{
-\item{x}{a `freqt` object}
+\item{x}{a \code{\link{freqt}} object}
 
 \item{...}{further parameters}
 
@@ -16,9 +16,9 @@ dataframe. By default, all markers available in the dataset will be
 included.}
 }
 \value{
-a `data.frame` with one allele per column and one marker per row. The
-  `row.names` of the result are the names of the markers.
+a \code{\link{data.frame}} with one allele per column and one marker
+  per row. The \code{row.names} of the result are the names of the markers.
 }
 \description{
-Convert a `freqt` to a `data.frame`
+Convert a \code{\link{freqt}} to a \code{\link{data.frame}}
 }

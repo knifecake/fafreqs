@@ -4,11 +4,14 @@
 \alias{importing_data}
 \alias{read_popstr}
 \alias{read_nist}
+\alias{read_familias}
 \title{Parse common allele frequency data formats}
 \usage{
 read_popstr(filename, name = "")
 
 read_nist(filename, name = "")
+
+read_familias(filepath, name)
 }
 \arguments{
 \item{filename}{the path to the relevant CSV file}
@@ -16,22 +19,25 @@ read_nist(filename, name = "")
 \item{name}{the name to give to the dataset}
 }
 \value{
-a `freqt` object with the given data
+a \code{\link{freqt}} object with the given data
 }
 \description{
-Reads a tabular data file and generates a `freqt` object. Supports multiple
-common data sources:
+Reads a tabular data file and generates a \code{\link{freqt}} object.
+Supports multiple common data sources:
 }
 \details{
 \describe{
 
-\item{read_popstr}{supports reading from CSV files downloaded from the
+\item{\code{read_popstr}}{supports reading from CSV files downloaded from the
 pop.STR project website. No modification of the files is required.}
 
-\item{read_nist}{Supports reading from CSV files generated from NIST
+\item{\code{read_nist}}{Supports reading from CSV files generated from NIST
 STRBase data. NIST data comes in MS Excel files with multiple sheets and
 additional formating. This function expexts a CSV file with only one of those
 sheets.}
+
+\item{\code{read_familias}}{Supports reading from a Familias frequency
+database file.}
 
 }
 }
