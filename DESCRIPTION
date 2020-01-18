@@ -1,0 +1,13 @@
+Package: fafreqs
+Type: Package
+Title: Common Frequency Databases for Forensic Markers
+Version: 0.1.0
+Authors@R: person("Elias", "Hernandis", email = "eliashernandis@gmail.com", role = c("aut", "cre"))
+Description: The fafreqs package is a compilation of widely available allele frequency data organised by population group. Data sources include popStr and others. The markers considered in the data are the most common STRs used in forensic DNA profiling.
+    In addition, some utility functions are provided to make dealing with the data easier.
+License: MIT + file LICENSE
+URL: https://github.com/knifecake/fafreqs
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.0.2
+Depends: R (>= 2.10)
