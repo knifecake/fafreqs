@@ -16,10 +16,15 @@
 #' \item{\code{read_familias}}{Supports reading from a Familias frequency
 #' database file.}
 #'
+#' \item{\code{read_strider}{Supports extracting frequency data from the STRidER
+#' 2.0 XML database. Requires that the parameter \code{origin} is supplied and
+#' that it matches one of the keys in the STRidER database.}
+#'
 #' }
 #'
 #' @param filename the path to the relevant CSV file
 #' @param name     the name to give to the dataset
+#' @param origin   (only for read_strider) which population group to choose
 #' @return a \code{\link{freqt}} object with the given data
 #'
 #' @name importing_data
@@ -112,5 +117,34 @@ read_familias <- function(filepath, name) {
 
   names(wide_freq) <- marker_names
 
-  as.data.frame(t(as.data.frame(lapply(wide_freq, unlist))))
+  freqt(as.data.frame(t(as.data.frame(lapply(wide_freq, unlist)))), name = name)
+}
+
+library(xml2)
+read_strider <- function(filename, name = "", origin = "") {
+  xml <- read_xml(filename)
+
+  markers <- unlist(as_list(xml_find_all(xml, "/frequencies/marker/alleles[node()]/../name")))
+
+  q <- sprintf('/frequencies/marker/alleles[node()]', origin)
+  all_alleles <- unlist(as_list(xml_find_all(xml, q)))
+  all_alleles <- as.character(sort(unique(as.numeric(unlist(lapply(all_alleles, function(as) { strsplit(as, ", ") }))))))
+
+  wide_freq <- lapply(markers, function(m) {
+    lapply(all_alleles, function (a) {
+      r <- list()
+      q <- sprintf('/frequencies/marker[name = "%s"]/origin[@name = "%s"]/frequency[@allele = "%s"]', m, origin, a)
+      result <- xml_find_all(xml, q)
+      if (length(result) > 0) {
+        r[a] = as.numeric(unlist(as_list(result)[1]))
+      } else {
+        r[a] = 0
+      }
+      r
+    })
+  })
+
+  names(wide_freq) <- markers
+
+  freqt(as.data.frame(t(as.data.frame(lapply(wide_freq, unlist)))), name = name)
 }

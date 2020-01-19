@@ -66,3 +66,113 @@
 
 #' @rdname data_nist
 "ft_nist_all"
+
+
+#' STRidER 2.0
+#'
+#' As per the STRidER website, be advised that in these tables, 1 represents all
+#' rare alleles shorter than the accepted allele categories. The value 99
+#' represents all rare alleles longer than the accepted categories. The
+#' following population groups are available:
+#'
+#' \describe{
+#'
+#' \item{ft_strider_austria}{Austria}
+#'
+#' \item{ft_strider_belgium}{Belgium}
+#'
+#' \item{ft_strider_bosnia_herzegowina}{Bosnia and Herzegowina}
+#'
+#' \item{ft_strider_czech_republic}{Czech Republic}
+#'
+#' \item{ft_strider_denmark}{Denmark}
+#'
+#' \item{ft_strider_finland}{Finland}
+#'
+#' \item{ft_strider_france}{France}
+#'
+#' \item{ft_strider_germany}{Germany}
+#'
+#' \item{ft_strider_greece}{Greece}
+#'
+#' \item{ft_strider_hungary}{Hungary}
+#'
+#' \item{ft_strider_ireland}{Ireland}
+#'
+#' \item{ft_strider_montenegro}{Montenegro}
+#'
+#' \item{ft_strider_norway}{Norway}
+#'
+#' \item{ft_strider_poland}{Poland}
+#'
+#' \item{ft_strider_slovakia}{Slovakia}
+#'
+#' \item{ft_strider_slovenia}{Slovenia}
+#'
+#' \item{ft_strider_spain}{Spain}
+#'
+#' \item{ft_strider_sweden}{Sweden}
+#'
+#' \item{ft_strider_switzerland}{Switzerland}
+#'
+#' }
+#'
+#' @source \url{https://strider.online/frequencies}
+#' @name data_strider
+
+#' @rdname data_strider
+"ft_strider_austria"
+
+#' @rdname data_strider
+"ft_strider_belgium"
+
+#' @rdname data_strider
+"ft_strider_bosnia_herzegowina"
+
+#' @rdname data_strider
+"ft_strider_czech_republic"
+
+#' @rdname data_strider
+"ft_strider_denmark"
+
+#' @rdname data_strider
+"ft_strider_finland"
+
+#' @rdname data_strider
+"ft_strider_france"
+
+#' @rdname data_strider
+"ft_strider_germany"
+
+#' @rdname data_strider
+"ft_strider_greece"
+
+#' @rdname data_strider
+"ft_strider_hungary"
+
+#' @rdname data_strider
+"ft_strider_ireland"
+
+#' @rdname data_strider
+"ft_strider_montenegro"
+
+#' @rdname data_strider
+"ft_strider_norway"
+
+#' @rdname data_strider
+"ft_strider_poland"
+
+#' @rdname data_strider
+"ft_strider_slovakia"
+
+#' @rdname data_strider
+"ft_strider_slovenia"
+
+#' @rdname data_strider
+"ft_strider_spain"
+
+#' @rdname data_strider
+"ft_strider_sweden"
+
+#' @rdname data_strider
+"ft_strider_switzerland"

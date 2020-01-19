@@ -13,6 +13,25 @@ library(fafreqs)
 available_datasets = list('pop.STR - Europe (All)' = 'ft_popstr_europe',
                           'pop.STR - NW Spain' = 'ft_popstr_nw_spain',
                           'pop.STR - Israel (Carmel) - Druze' = 'ft_popstr_israel_carmel_druze',
+                          'STRidER - Austria' = 'ft_strider_austria',
+                          'STRidER - Belgium' = 'ft_strider_belgium',
+                          'STRidER - Bosnia and Herzegowina' = 'ft_strider_bosnia_herzegowina',
+                          'STRidER - Czech Republic' = 'ft_strider_czech_republic',
+                          'STRidER - Denmark' = 'ft_strider_denmark',
+                          'STRidER - Finland' = 'ft_strider_finland',
+                          'STRidER - France' = 'ft_strider_france',
+                          'STRidER - Germany' = 'ft_strider_germany',
+                          'STRidER - Greece' = 'ft_strider_greece',
+                          'STRidER - Hungary' = 'ft_strider_hungary',
+                          'STRidER - Ireland' = 'ft_strider_ireland',
+                          'STRidER - Montenegro' = 'ft_strider_montenegro',
+                          'STRidER - Norway' = 'ft_strider_norway',
+                          'STRidER - Poland' = 'ft_strider_poland',
+                          'STRidER - Slovakia' = 'ft_strider_slovakia',
+                          'STRidER - Slovenia' = 'ft_strider_slovenia',
+                          'STRidER - Spain' = 'ft_strider_spain',
+                          'STRidER - Sweden' = 'ft_strider_sweden',
+                          'STRidER - Switzerland' = 'ft_strider_switzerland',
                           'Custom' = 'custom')
 
 available_markersets = list('Core 23' = 'core23',
@@ -39,8 +58,13 @@ tweaks <-
 # Define UI for application that draws a histogram
 ui <- fluidPage(
   tweaks,
-  selectInput("preset_dataset", "Preset dataset", available_datasets),
+
+  # Dataset input
+  selectInput("preset_dataset", "Select a preset dataset", available_datasets),
+  fileInput("custom_fam_file", "or load a Familias frequency file."),
   p(shinyTableFileLoaderInput('custom_freqt_file', 'or load your own frequency table')),
+
+  # Marker input
   selectInput('markerset_preset', 'Marker presets', available_markersets),
   textOutput('included_markers'),
   tags$div(align = 'left', class = 'multicol',
@@ -73,7 +97,6 @@ server <- function(input, output, session) {
 
   # Update the list of markers when the raw dataset changes
   observe({
-    print(markers(selected_dataset()))
     updateCheckboxGroupInput(session, 'markerset',
                              choiceNames = markers(selected_dataset()),
                              choiceValues = markers(selected_dataset()),

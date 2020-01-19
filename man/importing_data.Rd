@@ -17,6 +17,8 @@ read_familias(filepath, name)
 \item{filename}{the path to the relevant CSV file}
 
 \item{name}{the name to give to the dataset}
+
+\item{origin}{(only for read_strider) which population group to choose}
 }
 \value{
 a \code{\link{freqt}} object with the given data
@@ -26,18 +28,5 @@ Reads a tabular data file and generates a \code{\link{freqt}} object.
 Supports multiple common data sources:
 }
 \details{
-\describe{
 
-\item{\code{read_popstr}}{supports reading from CSV files downloaded from the
-pop.STR project website. No modification of the files is required.}
-
-\item{\code{read_nist}}{Supports reading from CSV files generated from NIST
-STRBase data. NIST data comes in MS Excel files with multiple sheets and
-additional formating. This function expexts a CSV file with only one of those
-sheets.}
-
-\item{\code{read_familias}}{Supports reading from a Familias frequency
-database file.}
-
-}
 }
