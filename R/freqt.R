@@ -66,6 +66,8 @@ as.data.frame.freqt <- function(x, ..., markers = NULL) {
 print.freqt <- function(x, ...) {
   df <- as.data.frame(x)
 
+  df[df == 0] <- NA
+
   print(df)
 
   invisible(df)

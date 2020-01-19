@@ -73,6 +73,7 @@ read_familias <- function(filepath, name) {
   i <- 1
   j <- 1
   while (i <= length(lines)) {
+
     marker_name = lines[i]
     i <- i + 1
 
@@ -82,7 +83,7 @@ read_familias <- function(filepath, name) {
       if (lines[i] == '') break
 
       unpacked = unlist(strsplit(lines[i], '\t', fixed = TRUE))
-      al = unpacked[1]
+      al = as.character(as.numeric(unpacked[1]))
       freq = as.double(unpacked[2])
 
       afreq[al] <- freq
@@ -101,7 +102,8 @@ read_familias <- function(filepath, name) {
 
   marker_names <- unlist(lapply(tmp_markers, function(m) { m$name }))
 
-  all_alleles <- unique(unlist(lapply(tmp_markers, function(m) { names(m$afreq) })))
+  all_alleles <- as.character(sort(as.numeric(unique(unlist(lapply(tmp_markers, function(m) { names(m$afreq) }))))))
+  print(all_alleles)
 
   wide_freq <- lapply(tmp_markers, function(m) {
     lapply(all_alleles, function(a) {
@@ -109,7 +111,7 @@ read_familias <- function(filepath, name) {
       if (a %in% names(m$afreq)) {
         r[a] <- m$afreq[a]
       } else {
-        r[a] <- 0
+        r[a] <- NA
       }
       r
     })
