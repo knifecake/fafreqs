@@ -83,8 +83,8 @@ read_familias <- function(filepath, name) {
       if (lines[i] == '') break
 
       unpacked = unlist(strsplit(lines[i], '\t', fixed = TRUE))
-      al = as.character(as.numeric(unpacked[1]))
-      freq = as.double(unpacked[2])
+      al = unpacked[1]
+      freq = as.numeric(unpacked[2])
 
       afreq[al] <- freq
 
@@ -102,18 +102,18 @@ read_familias <- function(filepath, name) {
 
   marker_names <- unlist(lapply(tmp_markers, function(m) { m$name }))
 
-  all_alleles <- as.character(sort(as.numeric(unique(unlist(lapply(tmp_markers, function(m) { names(m$afreq) }))))))
+  all_alleles <- unique(unlist(lapply(tmp_markers, function(m) { names(m$afreq) })))
   print(all_alleles)
 
   wide_freq <- lapply(tmp_markers, function(m) {
     lapply(all_alleles, function(a) {
-      r = list()
+      f = list()
       if (a %in% names(m$afreq)) {
-        r[a] <- m$afreq[a]
+        f[a] <- m$afreq[a]
       } else {
-        r[a] <- NA
+        f[a] <- NA
       }
-      r
+      f
     })
   })
 
@@ -130,19 +130,19 @@ read_strider <- function(filename, name = "", origin = "") {
 
   q <- sprintf('/frequencies/marker/alleles[node()]', origin)
   all_alleles <- unlist(as_list(xml_find_all(xml, q)))
-  all_alleles <- as.character(sort(unique(as.numeric(unlist(lapply(all_alleles, function(as) { strsplit(as, ", ") }))))))
+  all_alleles <- unique(unlist(lapply(all_alleles, function(as) { strsplit(as, ", ") })))
 
   wide_freq <- lapply(markers, function(m) {
     lapply(all_alleles, function (a) {
-      r <- list()
+      f <- list()
       q <- sprintf('/frequencies/marker[name = "%s"]/origin[@name = "%s"]/frequency[@allele = "%s"]', m, origin, a)
       result <- xml_find_all(xml, q)
       if (length(result) > 0) {
-        r[a] = as.numeric(unlist(as_list(result)[1]))
+        f[a] = as.numeric(unlist(as_list(result)[1]))
       } else {
-        r[a] = 0
+        f[a] = 0
       }
-      r
+      f
     })
   })
 
