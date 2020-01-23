@@ -2,13 +2,21 @@
 % Please edit documentation in R/write.R
 \name{exporting_data}
 \alias{exporting_data}
+\alias{write_csv}
 \alias{write_familias}
 \title{Write a frequency table}
 \usage{
-write_familias(x, filepath)
+write_csv(x, filepath, included_markers = NULL)
+
+write_familias(x, filepath, included_markers = NULL)
 }
 \arguments{
 \item{x}{a \code{\link{freqt}} object}
+
+\item{filepath}{the path where to write the output file}
+
+\item{included_markers}{markes to include in the exported file (default to
+all available markers)}
 }
 \description{
 

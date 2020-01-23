@@ -21,5 +21,5 @@ markers(ft_popstr_europe)
 
 }
 \seealso{
-\code{\link{filterMarkers}}
+\code{\link{filter_markers}}
 }

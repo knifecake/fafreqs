@@ -10,37 +10,37 @@
 library(shiny)
 library(fafreqs)
 
-available_datasets = list('pop.STR - Europe (All)' = 'ft_popstr_europe',
-                          'pop.STR - NW Spain' = 'ft_popstr_nw_spain',
-                          'pop.STR - Israel (Carmel) - Druze' = 'ft_popstr_israel_carmel_druze',
-                          'STRidER - Austria' = 'ft_strider_austria',
-                          'STRidER - Belgium' = 'ft_strider_belgium',
-                          'STRidER - Bosnia and Herzegowina' = 'ft_strider_bosnia_herzegowina',
-                          'STRidER - Czech Republic' = 'ft_strider_czech_republic',
-                          'STRidER - Denmark' = 'ft_strider_denmark',
-                          'STRidER - Finland' = 'ft_strider_finland',
-                          'STRidER - France' = 'ft_strider_france',
-                          'STRidER - Germany' = 'ft_strider_germany',
-                          'STRidER - Greece' = 'ft_strider_greece',
-                          'STRidER - Hungary' = 'ft_strider_hungary',
-                          'STRidER - Ireland' = 'ft_strider_ireland',
-                          'STRidER - Montenegro' = 'ft_strider_montenegro',
-                          'STRidER - Norway' = 'ft_strider_norway',
-                          'STRidER - Poland' = 'ft_strider_poland',
-                          'STRidER - Slovakia' = 'ft_strider_slovakia',
-                          'STRidER - Slovenia' = 'ft_strider_slovenia',
-                          'STRidER - Spain' = 'ft_strider_spain',
-                          'STRidER - Sweden' = 'ft_strider_sweden',
-                          'STRidER - Switzerland' = 'ft_strider_switzerland',
-                          'Custom' = 'custom')
+available_datasets <- list('pop.STR - Europe (All)' = 'ft_popstr_europe',
+                           'pop.STR - NW Spain' = 'ft_popstr_nw_spain',
+                           'pop.STR - Israel (Carmel) - Druze' = 'ft_popstr_israel_carmel_druze',
+                           'STRidER - Austria' = 'ft_strider_austria',
+                           'STRidER - Belgium' = 'ft_strider_belgium',
+                           'STRidER - Bosnia and Herzegowina' = 'ft_strider_bosnia_herzegowina',
+                           'STRidER - Czech Republic' = 'ft_strider_czech_republic',
+                           'STRidER - Denmark' = 'ft_strider_denmark',
+                           'STRidER - Finland' = 'ft_strider_finland',
+                           'STRidER - France' = 'ft_strider_france',
+                           'STRidER - Germany' = 'ft_strider_germany',
+                           'STRidER - Greece' = 'ft_strider_greece',
+                           'STRidER - Hungary' = 'ft_strider_hungary',
+                           'STRidER - Ireland' = 'ft_strider_ireland',
+                           'STRidER - Montenegro' = 'ft_strider_montenegro',
+                           'STRidER - Norway' = 'ft_strider_norway',
+                           'STRidER - Poland' = 'ft_strider_poland',
+                           'STRidER - Slovakia' = 'ft_strider_slovakia',
+                           'STRidER - Slovenia' = 'ft_strider_slovenia',
+                           'STRidER - Spain' = 'ft_strider_spain',
+                           'STRidER - Sweden' = 'ft_strider_sweden',
+                           'STRidER - Switzerland' = 'ft_strider_switzerland',
+                           'Custom' = 'custom')
 
-available_markersets = list('Core 23' = 'core23',
-                            'Core 23 + D6S1043' = 'core24',
-                            'Illumina ForenSeq' = 'illumina_forenseq',
-                            'Qiagen Investigator HDplex' = 'qiagen_investigator',
-                            'Promega CS7' = 'promega_cs7',
-                            'USC AIM-STRs' = 'usc_aim',
-                            'NIST Mini-STRs' = 'nist_mini')
+available_markersets <- list('Core 23' = 'core23',
+                             'Core 23 + D6S1043' = 'core24',
+                             'Illumina ForenSeq' = 'illumina_forenseq',
+                             'Qiagen Investigator HDplex' = 'qiagen_investigator',
+                             'Promega CS7' = 'promega_cs7',
+                             'USC AIM-STRs' = 'usc_aim',
+                             'NIST Mini-STRs' = 'nist_mini')
 
 tweaks <-
   list(tags$head(tags$style(HTML("
@@ -76,9 +76,9 @@ ui <- fluidPage(
 server <- function(input, output, session) {
 
   # User provided frequency tables
-  custom_freqt = callModule(shinyTableFileLoader, 'custom_freqt_file', id = 'custom_freqt_file',
-                            columnHeaders = TRUE,
-                            rowHeaders = TRUE)
+  custom_freqt <- callModule(shinyTableFileLoader, 'custom_freqt_file', id = 'custom_freqt_file',
+                             columnHeaders = TRUE,
+                             rowHeaders = TRUE)
 
   observe({
     if (isTruthy(custom_freqt())) {
@@ -109,7 +109,7 @@ server <- function(input, output, session) {
   })
 
   # Number of included markers output message
-  output$included_markers = reactive({
+  output$included_markers <- reactive({
     selected_markers = length(markers(dataset()))
     total_markers = length(markers(selected_dataset()))
     sprintf("%d out of %d markers selected", selected_markers, total_markers)
@@ -119,4 +119,3 @@ server <- function(input, output, session) {
 
 # Run the application
 shinyApp(ui = ui, server = server)
-

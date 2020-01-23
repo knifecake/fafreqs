@@ -54,10 +54,10 @@ read_popstr <- function(filename, name = "") {
 #' @rdname importing_data
 #' @export
 read_nist <- function(filename, name = "") {
-  data <- read.csv(filename, header = T, sep = ';', dec = '.')
+  data <- read.csv(filename, header = T, sep = ";", dec = ".")
 
   df <- t(data[3:(nrow(data) - 4), 2:ncol(data)])
-  colnames(df) = as.character(data[3:(nrow(data) - 4) ,1])
+  colnames(df) <- as.character(data[3:(nrow(data) - 4), 1])
 
   freqt(df, name)
 }
@@ -65,8 +65,8 @@ read_nist <- function(filename, name = "") {
 #' @rdname importing_data
 #' @export
 read_familias <- function(filepath, name) {
-  conn = file(description = filepath, open = 'r')
-  lines = readLines(conn)
+  conn <- file(description = filepath, open = "r")
+  lines <- readLines(conn)
 
   tmp_markers <- list()
 
@@ -74,25 +74,25 @@ read_familias <- function(filepath, name) {
   j <- 1
   while (i <= length(lines)) {
 
-    marker_name = lines[i]
+    marker_name <- lines[i]
     i <- i + 1
 
     afreq = list()
 
     while (i <= length(lines)) {
-      if (lines[i] == '') break
+      if (lines[i] == "") break
 
-      unpacked = unlist(strsplit(lines[i], '\t', fixed = TRUE))
-      al = unpacked[1]
-      freq = as.numeric(unpacked[2])
+      unpacked = unlist(strsplit(lines[i], "\t", fixed = TRUE))
+      al <- unpacked[1]
+      freq <- as.numeric(unpacked[2])
 
       afreq[al] <- freq
 
       i <- i + 1
     }
 
-    tmp_markers[[j]] = list(name = marker_name,
-                            afreq = afreq)
+    tmp_markers[[j]] <- list(name = marker_name,
+                             afreq = afreq)
 
     i <- i + 1
     j <- j + 1
@@ -100,9 +100,11 @@ read_familias <- function(filepath, name) {
 
   close(conn)
 
-  marker_names <- unlist(lapply(tmp_markers, function(m) { m$name }))
+  marker_names <- unlist(lapply(tmp_markers,
+                                function(m) { m$name }))
 
-  all_alleles <- unique(unlist(lapply(tmp_markers, function(m) { names(m$afreq) })))
+  all_alleles <- unique(unlist(lapply(tmp_markers,
+                                      function(m) { names(m$afreq) })))
   print(all_alleles)
 
   wide_freq <- lapply(tmp_markers, function(m) {
@@ -128,19 +130,20 @@ read_strider <- function(filename, name = "", origin = "") {
 
   markers <- unlist(as_list(xml_find_all(xml, "/frequencies/marker/alleles[node()]/../name")))
 
-  q <- sprintf('/frequencies/marker/alleles[node()]', origin)
+  q <- sprintf("/frequencies/marker/alleles[node()]", origin)
   all_alleles <- unlist(as_list(xml_find_all(xml, q)))
   all_alleles <- unique(unlist(lapply(all_alleles, function(as) { strsplit(as, ", ") })))
 
   wide_freq <- lapply(markers, function(m) {
     lapply(all_alleles, function (a) {
       f <- list()
-      q <- sprintf('/frequencies/marker[name = "%s"]/origin[@name = "%s"]/frequency[@allele = "%s"]', m, origin, a)
+      q <- sprintf("/frequencies/marker[name = \"%s\"]/origin[@name = \"%s\"]/frequency[@allele = \"%s\"]",
+                   m, origin, a)
       result <- xml_find_all(xml, q)
       if (length(result) > 0) {
-        f[a] = as.numeric(unlist(as_list(result)[1]))
+        f[a] <- as.numeric(unlist(as_list(result)[1]))
       } else {
-        f[a] = 0
+        f[a] <- 0
       }
       f
     })

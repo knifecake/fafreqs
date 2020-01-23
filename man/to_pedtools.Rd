@@ -20,7 +20,8 @@ this package into pedtools or other pedsuite packages which use the pedtools
 package such as forrel.
 }
 \examples{
-p = nuclearPed
+library(pedtools)
+p = nuclearPed(1)
 p = setMarkers(p, locusAttributes = to_pedtools(ft_nist_african_american))
 
 }

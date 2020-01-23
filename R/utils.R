@@ -1,5 +1,15 @@
 empty_freqt <- freqt(data.frame())
 
+#' Remove columns where every row is NA
+#'
+#' @param x a dataframe
+#' @return `x` but with columns where every row was NA removed
+#'
+#' @source \url{https://stackoverflow.com/a/2644009/1646268}
+remove_all_na_columns <- function(x) {
+  x[ , colSums(is.na(x)) < nrow(x)]
+}
+
 #' Get markers in a \code{\link{freqt}} object
 #'
 #' @param x a \code{\link{freqt}} object
@@ -9,7 +19,7 @@ empty_freqt <- freqt(data.frame())
 #' @examples
 #' markers(ft_popstr_europe)
 #'
-#' @seealso \code{\link{filterMarkers}}
+#' @seealso \code{\link{filter_markers}}
 #' @export
 markers <- function(x) {
   rownames(x$TABLE)
@@ -44,7 +54,7 @@ filter_markers <- function(x, markers) {
 #' @return a list of allele names
 #'
 #' @export
-alleles.freqt <- function(x, marker) {
+alleles <- function(x, marker) {
   colnames(x$TABLE[marker, !is.na(x$TABLE[marker, ])])
 }
 
@@ -60,7 +70,8 @@ alleles.freqt <- function(x, marker) {
 #'   \code{locusAttributes} definition
 #'
 #' @examples
-#' p = nuclearPed
+#' library(pedtools)
+#' p = nuclearPed(1)
 #' p = setMarkers(p, locusAttributes = to_pedtools(ft_nist_african_american))
 #'
 #' @seealso \code{\link{marker_attach}}

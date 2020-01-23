@@ -1,24 +1,27 @@
+library(shiny)
+
 #' Table File Loader Input
 #'
 #' UI function for the Table File Loader shiny module.
 #'
-#' The Table File Loader shiny module makes it easy for users to load
-#' tabular data from delimited files by allowing them to customise loading
-#' parameters such as column separator, header presence and more. When invoked,
-#' it shows an interactive modal with a preview of the table that is being
-#' loaded that is updated when the user modifies loading settings. The module
-#' returns a dataframe from the data loaded using the user-specified parameters.
+#' The Table File Loader shiny module makes it easy for users to load tabular
+#' data from delimited files by allowing them to customise loading parameters
+#' such as column separator, header presence and more. When invoked, it shows an
+#' interactive modal with a preview of the table that is being loaded that is
+#' updated when the user modifies loading settings. The module returns a
+#' dataframe from the data loaded using the user-specified parameters.
 #'
-#' This UI function must be included inside the `ui.R` file or `ui()` function of
-#' the *shiny* interface. See examples. Also, the server part of this module,
-#' [shinyTableFileLoader()] must be included in the server section of the
-#' shiny application.
+#' This UI function must be included inside the \code{ui.R} file or the
+#' \code{ui()} function of the shiny interface. See examples. Also, the server
+#' part of this module, \code{\link{shinyTableFileLoader}} must be included in
+#' the server section of the shiny application.
 #'
 #' @param id a stirng that is unique among the widgets used in the interface
 #' @param label the string shown as a link to open the modal dialog for loading
 #'   the file
 #'
-#' @seealso [shinyTableFileLoader()] for the server part of this module
+#' @seealso \code{\link{shinyTableFileLoader}} for the server part of this
+#'   module
 #'
 #' @export
 shinyTableFileLoaderInput <- function(id, label = 'Table loader') {
@@ -27,7 +30,7 @@ shinyTableFileLoaderInput <- function(id, label = 'Table loader') {
   ns <- NS(id)
 
   tagList(
-    actionLink(ns('modalLink'), label = label)
+    actionLink(ns("modalLink"), label = label)
   )
 }
 
@@ -35,32 +38,42 @@ shinyTableFileLoaderInput <- function(id, label = 'Table loader') {
 #'
 #' Server function for the Table File Loader shiny module.
 #'
-#' The Table File Loader shiny module makes it easy for users to load
-#' tabular data from delimited files by allowing them to customise loading
-#' parameters such as column separator, header presence and more. When invoked,
-#' it shows an interactive modal with a preview of the table that is being
-#' loaded that is updated when the user modifies loading settings. The module
-#' returns a dataframe from the data loaded using the user-specified parameters.
+#' The Table File Loader shiny module makes it easy for users to load tabular
+#' data from delimited files by allowing them to customise loading parameters
+#' such as column separator, header presence and more. When invoked, it shows an
+#' interactive modal with a preview of the table that is being loaded that is
+#' updated when the user modifies loading settings. The module returns a
+#' dataframe from the data loaded using the user-specified parameters.
 #'
-#' This server function must be included inside the `server.R` file or `server()` function of
-#' the *shiny* interface. See examples. Also, the UI part of this module,
-#' [shinyTableFileLoaderInput()] must be included in the UI section of the
-#' shiny application.
+#' This server function must be included inside the \code{server.R} file or
+#' \code{server()} function of the shiny interface. See examples. Also, the UI
+#' part of this module, \code{\link{shinyTableFileLoaderInput}} must be included
+#' in the UI section of the shiny application.
 #'
-#' @param input the input param of the *shiny* server function
-#' @param output the output param of the *shiny* server function
-#' @param session the session param of the *shiny* server function
-#' @param id a string that is unique among the widget names of the UI. Must be the same as the one passed as `id` to the UI function [advancedTableFileLoaderInput()].
-#' @param columnHeaders whether the option to treat the first row as headers should be enabled by default. Defaults to `FALSE`. See [read.table()].
-#' @param rowHeaders whether the option to treat the first column as row headers should be enabled by default. When set to TRUE, [read.table()] is called with `row.headers = 1`.
-#' @param sep the default value for the column separator. Defaults to a comma (`,`).
-#' @param quote the default value for the quoting character. Defaults to a simple double quote (`"`).
-#' @param na.strings the default value for the string indicating that a value should be treated as NA. Defaults to `NA`.
-#' @param dec the default value for the decimal separator character. Defaults to a dot (`.`).
-#' @param transpose whether the loaded table should be transposed. Defaults to `FALSE`.
+#' @param input the input param of the shiny server function
+#' @param output the output param of the shiny server function
+#' @param session the session param of the shiny server function
+#' @param id a string that is unique among the widget names of the UI. Must be
+#'   the same as the one passed as `id` to the UI function
+#'   [advancedTableFileLoaderInput()].
+#' @param columnHeaders whether the option to treat the first row as headers
+#'   should be enabled by default. Defaults to `FALSE`. See [read.table()].
+#' @param rowHeaders whether the option to treat the first column as row headers
+#'   should be enabled by default. When set to TRUE, [read.table()] is called
+#'   with `row.headers = 1`.
+#' @param sep the default value for the column separator. Defaults to a comma
+#'   (`,`).
+#' @param quote the default value for the quoting character. Defaults to a
+#'   simple double quote (`"`).
+#' @param na.strings the default value for the string indicating that a value
+#'   should be treated as NA. Defaults to `NA`.
+#' @param dec the default value for the decimal separator character. Defaults to
+#'   a dot (`.`).
+#' @param transpose whether the loaded table should be transposed. Defaults to
+#'   `FALSE`.
 #'
 #'
-#' @seealso [shinyTableFileLoader()] for the server part of this module
+#' @seealso \code{\link{shinyTableFileLoaderInput}} for the UI part of this module
 #'
 #' @export
 shinyTableFileLoader <- function(input, output, session, id = 'namespace',

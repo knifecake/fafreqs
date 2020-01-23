@@ -44,7 +44,7 @@ freqt <- function(x, name = "") {
 #' @export
 as.data.frame.freqt <- function(x, ..., markers = NULL) {
   if (is.null(markers)) {
-    markers = rownames(x$TABLE)
+    markers <- rownames(x$TABLE)
   }
 
   x$TABLE[markers, colSums(x$TABLE != 0, na.rm = TRUE) > 0]
@@ -54,8 +54,9 @@ as.data.frame.freqt <- function(x, ..., markers = NULL) {
 #'
 #' Print a \code{\link{freqt}} object
 #'
-#' This first calls \code{\link{as.data.frame.freqt}} and then prints the resulting
-#' \code{\link{data.frame}}. The \code{data.frame} is returned invisibly.
+#' This first calls \code{\link{as.data.frame.freqt}} and then prints the
+#' resulting \code{\link{data.frame}}. The \code{data.frame} is returned
+#' invisibly.
 #'
 #' @param x a \code{\link{freqt}} object
 #' @param ... further parameters

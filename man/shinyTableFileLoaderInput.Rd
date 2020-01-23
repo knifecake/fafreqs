@@ -16,18 +16,19 @@ the file}
 UI function for the Table File Loader shiny module.
 }
 \details{
-The Table File Loader shiny module makes it easy for users to load
-tabular data from delimited files by allowing them to customise loading
-parameters such as column separator, header presence and more. When invoked,
-it shows an interactive modal with a preview of the table that is being
-loaded that is updated when the user modifies loading settings. The module
-returns a dataframe from the data loaded using the user-specified parameters.
+The Table File Loader shiny module makes it easy for users to load tabular
+data from delimited files by allowing them to customise loading parameters
+such as column separator, header presence and more. When invoked, it shows an
+interactive modal with a preview of the table that is being loaded that is
+updated when the user modifies loading settings. The module returns a
+dataframe from the data loaded using the user-specified parameters.
 
-This UI function must be included inside the `ui.R` file or `ui()` function of
-the *shiny* interface. See examples. Also, the server part of this module,
-[shinyTableFileLoader()] must be included in the server section of the
-shiny application.
+This UI function must be included inside the \code{ui.R} file or the
+\code{ui()} function of the shiny interface. See examples. Also, the server
+part of this module, \code{\link{shinyTableFileLoader}} must be included in
+the server section of the shiny application.
 }
 \seealso{
-[shinyTableFileLoader()] for the server part of this module
+\code{\link{shinyTableFileLoader}} for the server part of this
+  module
 }

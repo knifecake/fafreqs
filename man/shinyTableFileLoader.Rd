@@ -19,44 +19,54 @@ shinyTableFileLoader(
 )
 }
 \arguments{
-\item{input}{the input param of the *shiny* server function}
+\item{input}{the input param of the shiny server function}
 
-\item{output}{the output param of the *shiny* server function}
+\item{output}{the output param of the shiny server function}
 
-\item{session}{the session param of the *shiny* server function}
+\item{session}{the session param of the shiny server function}
 
-\item{id}{a string that is unique among the widget names of the UI. Must be the same as the one passed as `id` to the UI function [advancedTableFileLoaderInput()].}
+\item{id}{a string that is unique among the widget names of the UI. Must be
+the same as the one passed as `id` to the UI function
+[advancedTableFileLoaderInput()].}
 
-\item{columnHeaders}{whether the option to treat the first row as headers should be enabled by default. Defaults to `FALSE`. See [read.table()].}
+\item{columnHeaders}{whether the option to treat the first row as headers
+should be enabled by default. Defaults to `FALSE`. See [read.table()].}
 
-\item{rowHeaders}{whether the option to treat the first column as row headers should be enabled by default. When set to TRUE, [read.table()] is called with `row.headers = 1`.}
+\item{rowHeaders}{whether the option to treat the first column as row headers
+should be enabled by default. When set to TRUE, [read.table()] is called
+with `row.headers = 1`.}
 
-\item{sep}{the default value for the column separator. Defaults to a comma (`,`).}
+\item{sep}{the default value for the column separator. Defaults to a comma
+(`,`).}
 
-\item{quote}{the default value for the quoting character. Defaults to a simple double quote (`"`).}
+\item{quote}{the default value for the quoting character. Defaults to a
+simple double quote (`"`).}
 
-\item{na.strings}{the default value for the string indicating that a value should be treated as NA. Defaults to `NA`.}
+\item{na.strings}{the default value for the string indicating that a value
+should be treated as NA. Defaults to `NA`.}
 
-\item{dec}{the default value for the decimal separator character. Defaults to a dot (`.`).}
+\item{dec}{the default value for the decimal separator character. Defaults to
+a dot (`.`).}
 
-\item{transpose}{whether the loaded table should be transposed. Defaults to `FALSE`.}
+\item{transpose}{whether the loaded table should be transposed. Defaults to
+`FALSE`.}
 }
 \description{
 Server function for the Table File Loader shiny module.
 }
 \details{
-The Table File Loader shiny module makes it easy for users to load
-tabular data from delimited files by allowing them to customise loading
-parameters such as column separator, header presence and more. When invoked,
-it shows an interactive modal with a preview of the table that is being
-loaded that is updated when the user modifies loading settings. The module
-returns a dataframe from the data loaded using the user-specified parameters.
+The Table File Loader shiny module makes it easy for users to load tabular
+data from delimited files by allowing them to customise loading parameters
+such as column separator, header presence and more. When invoked, it shows an
+interactive modal with a preview of the table that is being loaded that is
+updated when the user modifies loading settings. The module returns a
+dataframe from the data loaded using the user-specified parameters.
 
-This server function must be included inside the `server.R` file or `server()` function of
-the *shiny* interface. See examples. Also, the UI part of this module,
-[shinyTableFileLoaderInput()] must be included in the UI section of the
-shiny application.
+This server function must be included inside the \code{server.R} file or
+\code{server()} function of the shiny interface. See examples. Also, the UI
+part of this module, \code{\link{shinyTableFileLoaderInput}} must be included
+in the UI section of the shiny application.
 }
 \seealso{
-[shinyTableFileLoader()] for the server part of this module
+\code{\link{shinyTableFileLoaderInput}} for the UI part of this module
 }
