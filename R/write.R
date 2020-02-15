@@ -1,6 +1,8 @@
 #' Write a frequency table
 #'
-#' \description{
+#' Writes a frequency table in one of the implemented formats.
+#'
+#' \describe{
 #'
 #' \item{write_csv}{Writes to a CSV file in the standard one-marker-per-row,
 #' one-allele-per-column format.}
@@ -15,6 +17,7 @@
 #'   all available markers)
 #'
 #' @name exporting_data
+#' @seealso \link{importing_data}
 
 #' @rdname exporting_data
 #' @export

@@ -19,8 +19,18 @@ write_familias(x, filepath, included_markers = NULL)
 all available markers)}
 }
 \description{
-
+Writes a frequency table in one of the implemented formats.
 }
 \details{
+\describe{
 
+\item{write_csv}{Writes to a CSV file in the standard one-marker-per-row,
+one-allele-per-column format.}
+
+\item{write_familias}{Writes to a familias allele frequency database file.}
+
+}
+}
+\seealso{
+\link{importing_data}
 }

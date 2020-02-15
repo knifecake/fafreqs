@@ -16,7 +16,7 @@
 #' \item{\code{read_familias}}{Supports reading from a Familias frequency
 #' database file.}
 #'
-#' \item{\code{read_strider}{Supports extracting frequency data from the STRidER
+#' \item{\code{read_strider}}{Supports extracting frequency data from the STRidER
 #' 2.0 XML database. Requires that the parameter \code{origin} is supplied and
 #' that it matches one of the keys in the STRidER database.}
 #'
