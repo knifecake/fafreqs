@@ -39,7 +39,11 @@ fafreqs_widget_input <- function(id,
     if (allow_import_familias)
       fileInput(ns("custom_fam_file"), "or load a Familias frequency file"),
     if (allow_import_csv)
-      p(shinyTableFileLoaderInput(ns("custom_freqt_file"), "or load your own frequency table")),
+      tabular_data_loader_input(ns("custom_freqt_file"),
+                                allow_header_toggle = TRUE,
+                                allow_rownames_toggle = TRUE,
+                                na_string = NULL,
+                                allowed_field_delimiters = NULL),
 
     # Marker input
     if (allow_marker_filtering)
@@ -61,10 +65,6 @@ fafreqs_widget_input <- function(id,
 #'
 fafreqs_widget <- function(input, output, session, id) {
 
-  # create a namespace to avoid name collisions with other modules / other
-  # instances of this one
-  ns <- NS(id)
-
   # Familias frequency tables
   familias_freqt <- reactive({
     if (isTruthy(input$custom_fam_file)) {
@@ -72,13 +72,19 @@ fafreqs_widget <- function(input, output, session, id) {
     }
   })
 
+  custom_df <- callModule(tabular_data_loader, "custom_freqt_file")
+
   # User provided frequency tables
-  custom_freqt <- callModule(shinyTableFileLoader, ns("custom_freqt_file"),
-                             id = ns("custom_freqt_file"),
-                             columnHeaders = TRUE,
-                             rowHeaders = TRUE)
+  custom_freqt <- reactive({
+    print(custom_df())
+    if (isTruthy(custom_df()))
+      freqt(custom_df(), name = "Custom")
+    else
+      NULL
+  })
 
   observe({
+    print(custom_freqt())
     if (isTruthy(custom_freqt())) {
       updateSelectInput(session, "preset_dataset", selected = "custom")
     }
@@ -93,7 +99,7 @@ fafreqs_widget <- function(input, output, session, id) {
   # Raw dataset we are working with (either a preset one or a custom one)
   selected_dataset <- reactive({
     if (input$preset_dataset == "custom") {
-      freqt(custom_freqt(), name = "Custom")
+      custom_freqt()
     } else if (input$preset_dataset == "familias") {
       familias_freqt()
     } else {
@@ -104,9 +110,9 @@ fafreqs_widget <- function(input, output, session, id) {
   # Update the list of markers when the raw dataset changes
   observe({
     if (isTruthy(input$markerset_preset)) {
-      selected_markers = markers(selected_dataset())
+      selected_markers <- markers(selected_dataset())
       if (input$markerset_preset != "all") {
-        selected_markers = eval(parse(text = input$markerset_preset))
+        selected_markers <- eval(parse(text = input$markerset_preset))
       }
       updateCheckboxGroupInput(session, "markerset",
                                choiceNames = markers(selected_dataset()),
@@ -126,7 +132,7 @@ fafreqs_widget <- function(input, output, session, id) {
   })
 
   # Number of included markers output message
-  output$included_markers <- reactive({
+  output$included_markers <- renderText({
     selected_markers <- length(markers(dataset()))
     total_markers <- length(markers(selected_dataset()))
     sprintf("%d out of %d markers selected", selected_markers, total_markers)

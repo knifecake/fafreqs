@@ -13,7 +13,7 @@ fafreqs_widget_input(
 )
 }
 \arguments{
-\item{id}{a unique identifier per shiny's documentation}
+\item{id}{a unique identifier per shiny"s documentation}
 
 \item{allow_fafreqs_markersets}{allow the user to select one of the freqyency
 tables included in the \link{fafreqs} package}
