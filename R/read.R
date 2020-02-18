@@ -64,8 +64,8 @@ read_nist <- function(filename, name = "") {
 
 #' @rdname importing_data
 #' @export
-read_familias <- function(filepath, name) {
-  conn <- file(description = filepath, open = "r")
+read_familias <- function(filename, name) {
+  conn <- file(description = filename, open = "r")
   lines <- readLines(conn)
 
   tmp_markers <- list()
@@ -77,12 +77,12 @@ read_familias <- function(filepath, name) {
     marker_name <- lines[i]
     i <- i + 1
 
-    afreq = list()
+    afreq <- list()
 
     while (i <= length(lines)) {
       if (lines[i] == "") break
 
-      unpacked = unlist(strsplit(lines[i], "\t", fixed = TRUE))
+      unpacked <- unlist(strsplit(lines[i], "\t", fixed = TRUE))
       al <- unpacked[1]
       freq <- as.numeric(unpacked[2])
 
@@ -100,16 +100,13 @@ read_familias <- function(filepath, name) {
 
   close(conn)
 
-  marker_names <- unlist(lapply(tmp_markers,
-                                function(m) { m$name }))
+  marker_names <- unlist(lapply(tmp_markers, function(m) { m$name }))
 
-  all_alleles <- unique(unlist(lapply(tmp_markers,
-                                      function(m) { names(m$afreq) })))
-  print(all_alleles)
+  all_alleles <- unique(unlist(lapply(tmp_markers, function(m) { names(m$afreq) })))
 
   wide_freq <- lapply(tmp_markers, function(m) {
     lapply(all_alleles, function(a) {
-      f = list()
+      f <- list()
       if (a %in% names(m$afreq)) {
         f[a] <- m$afreq[a]
       } else {

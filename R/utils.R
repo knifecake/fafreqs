@@ -7,7 +7,7 @@ empty_freqt <- freqt(data.frame())
 #'
 #' @source \url{https://stackoverflow.com/a/2644009/1646268}
 remove_all_na_columns <- function(x) {
-  x[ , colSums(is.na(x)) < nrow(x)]
+  x[, colSums(is.na(x)) < nrow(x)]
 }
 
 #' Get markers in a \code{\link{freqt}} object
@@ -39,7 +39,7 @@ markers <- function(x) {
 #' @seealso \code{\link{markers}}
 #' @export
 filter_markers <- function(x, markers) {
-  x$TABLE = x$TABLE[markers,]
+  x$TABLE <- x$TABLE[markers, ]
 
   x
 }
@@ -74,11 +74,11 @@ alleles <- function(x, marker) {
 #' p = nuclearPed(1)
 #' p = setMarkers(p, locusAttributes = to_pedtools(ft_nist_african_american))
 #'
-#' @seealso \code{\link{marker_attach}}
+#' @seealso \code{\link[pedtools]{marker_attach}}
 #'
 #' @export
 to_pedtools <- function(x) {
-  ms = markers(x)
+  ms <- markers(x)
 
   lapply(ms, function(m) {
     list(

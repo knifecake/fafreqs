@@ -26,5 +26,5 @@ p = setMarkers(p, locusAttributes = to_pedtools(ft_nist_african_american))
 
 }
 \seealso{
-\code{\link{marker_attach}}
+\code{\link[pedtools]{marker_attach}}
 }

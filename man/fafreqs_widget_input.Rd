@@ -16,7 +16,7 @@ fafreqs_widget_input(
 \item{id}{a unique identifier per shiny"s documentation}
 
 \item{allow_fafreqs_markersets}{allow the user to select one of the freqyency
-tables included in the \link{fafreqs} package}
+tables included in the \code{fafreqs} package}
 
 \item{allow_import_familias}{allow the user to load a familias frequency file}
 

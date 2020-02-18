@@ -16,5 +16,5 @@ fafreqs_widget(input, output, session, id)
 \item{id}{the id given to the input}
 }
 \description{
-Use with the \code{\link{callModule}} function.
+Use with the \code{\link[shiny]{callModule}} function.
 }

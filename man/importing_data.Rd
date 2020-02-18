@@ -11,7 +11,7 @@ read_popstr(filename, name = "")
 
 read_nist(filename, name = "")
 
-read_familias(filepath, name)
+read_familias(filename, name)
 }
 \arguments{
 \item{filename}{the path to the relevant CSV file}

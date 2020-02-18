@@ -1,11 +1,8 @@
-library("shiny")
-
-
 #' Frequency database loader input
 #'
 #' @param id a unique identifier per shiny"s documentation
 #' @param allow_fafreqs_markersets allow the user to select one of the freqyency
-#'   tables included in the \link{fafreqs} package
+#'   tables included in the \code{fafreqs} package
 #' @param allow_import_familias allow the user to load a familias frequency file
 #' @param allow_import_csv allow the user to load a custom frequency table
 #' @param allow_marker_filtering allow the user to select which markers are to
@@ -21,36 +18,33 @@ fafreqs_widget_input <- function(id,
 
   # create a namespace to avoid name collisions with other modules / other
   # instances of this one
-  ns <- NS(id)
+  ns <- shiny::NS(id)
 
-  marker_input <- tagList(
-    selectInput(ns("markerset_preset"), "Marker presets", available_markersets),
-    textOutput(ns("included_markers")),
-    tags$div(align = "left", class = "multicol",
-             checkboxGroupInput(ns("markerset"), "Markers"))
+  marker_input <- shiny::tagList(
+    shiny::selectInput(ns("markerset_preset"), "Marker presets", available_markersets),
+    shiny::textOutput(ns("included_markers")),
+    gezellig::multicolumn(5, shiny::checkboxGroupInput(ns("markerset"), "Markers"))
   )
 
-  tagList(
-    tweaks,
-
+  shiny::tagList(
     # Dataset input
     if (allow_fafreqs_markersets)
-      selectInput(ns("preset_dataset"), "Select a preset dataset", available_datasets),
+      shiny::selectInput(ns("preset_dataset"), "Select a preset dataset", available_datasets),
     if (allow_import_familias)
-      fileInput(ns("custom_fam_file"), "or load a Familias frequency file"),
+      shiny::fileInput(ns("custom_fam_file"), "or load a Familias frequency file"),
     if (allow_import_csv)
-      actionLink(ns("open_tabular_modal"), "or load your own table-like file"),
+      shiny::actionLink(ns("open_tabular_modal"), "or load your own table-like file"),
 
     # Marker input
     if (allow_marker_filtering)
       marker_input,
-    tags$div()
+    shiny::tags$div()
   )
 }
 
 #' Frequency database loader
 #'
-#' Use with the \code{\link{callModule}} function.
+#' Use with the \code{\link[shiny]{callModule}} function.
 #'
 #' @param input the shiny input object
 #' @param output the shiny output object
@@ -69,45 +63,44 @@ fafreqs_widget <- function(input, output, session, id) {
   })
 
   # Custom table loader inside a modal
-  observeEvent(input$open_tabular_modal, {
-    showModal(modalDialog(
+  shiny::observeEvent(input$open_tabular_modal, {
+    shiny::showModal(shiny::modalDialog(
       title = "Load tabular frequency file",
       fade = FALSE,
       p("Load a CSV, TSV or other tabular file. Specify the column separators and other settings to match the structure of your file."),
-      tabular_data_loader_input(session$ns("custom_freqt_file"),
-                                allow_header_toggle = TRUE,
-                                allow_rownames_toggle = TRUE,
-                                na_string = NULL,
-                                allowed_field_delimiters = NULL,
-                                cols = 2)
+      gezellig::tabular_data_loader_input(session$ns("custom_freqt_file"),
+                                          allow_header_toggle = TRUE,
+                                          allow_rownames_toggle = TRUE,
+                                          na_string = NULL,
+                                          allowed_field_delimiters = NULL,
+                                          cols = 2)
     ))
   })
-  custom_df <- callModule(tabular_data_loader, "custom_freqt_file")
+  custom_df <- shiny::callModule(gezellig::tabular_data_loader, "custom_freqt_file")
 
   # User provided frequency tables
-  custom_freqt <- reactive({
-    print(custom_df())
-    if (isTruthy(custom_df()))
+  custom_freqt <- shiny::reactive({
+    if (shiny::isTruthy(custom_df()))
       freqt(custom_df(), name = "Custom")
     else
       NULL
   })
 
-  observe({
+  shiny::observe({
     print(custom_freqt())
-    if (isTruthy(custom_freqt())) {
-      updateSelectInput(session, "preset_dataset", selected = "custom")
+    if (shiny::isTruthy(custom_freqt())) {
+      shiny::updateSelectInput(session, "preset_dataset", selected = "custom")
     }
   })
 
-  observe({
-    if (isTruthy(familias_freqt())) {
-      updateSelectInput(session, "preset_dataset", selected = "familias")
+  shiny::observe({
+    if (shiny::isTruthy(familias_freqt())) {
+      shiny::updateSelectInput(session, "preset_dataset", selected = "familias")
     }
   })
 
   # Raw dataset we are working with (either a preset one or a custom one)
-  selected_dataset <- reactive({
+  selected_dataset <- shiny::reactive({
     if (input$preset_dataset == "custom") {
       custom_freqt()
     } else if (input$preset_dataset == "familias") {
@@ -118,31 +111,31 @@ fafreqs_widget <- function(input, output, session, id) {
   })
 
   # Update the list of markers when the raw dataset changes
-  observe({
-    if (isTruthy(input$markerset_preset)) {
+  shiny::observe({
+    if (shiny::isTruthy(input$markerset_preset)) {
       selected_markers <- markers(selected_dataset())
       if (input$markerset_preset != "all") {
         selected_markers <- eval(parse(text = input$markerset_preset))
       }
-      updateCheckboxGroupInput(session, "markerset",
-                               choiceNames = markers(selected_dataset()),
-                               choiceValues = markers(selected_dataset()),
-                               selected = selected_markers)
+      shiny::updateCheckboxGroupInput(session, "markerset",
+                                      choiceNames = markers(selected_dataset()),
+                                      choiceValues = markers(selected_dataset()),
+                                      selected = selected_markers)
     }
   })
 
   # Output dataset
-  dataset <- reactive({
+  dataset <- shiny::reactive({
     markers <- markers(selected_dataset())
 
-    if (isTruthy(input$markerset)) {
+    if (shiny::isTruthy(input$markerset)) {
         markers <- input$markerset
     }
     filter_markers(selected_dataset(), markers)
   })
 
   # Number of included markers output message
-  output$included_markers <- renderText({
+  output$included_markers <- shiny::renderText({
     selected_markers <- length(markers(dataset()))
     total_markers <- length(markers(selected_dataset()))
     sprintf("%d out of %d markers selected", selected_markers, total_markers)
@@ -189,7 +182,7 @@ available_markersets <- list("All" = "all",
                              "NIST Mini-STRs" = "nist_mini")
 
 tweaks <-
-  list(tags$head(tags$style(HTML("
+  list(shiny::tags$head(shiny::tags$style(shiny::HTML("
                                  .multicol {
                                  //height: 150px;
                                  -webkit-column-count: 3; /* Chrome, Safari, Opera */
