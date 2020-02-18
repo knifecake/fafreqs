@@ -39,11 +39,7 @@ fafreqs_widget_input <- function(id,
     if (allow_import_familias)
       fileInput(ns("custom_fam_file"), "or load a Familias frequency file"),
     if (allow_import_csv)
-      tabular_data_loader_input(ns("custom_freqt_file"),
-                                allow_header_toggle = TRUE,
-                                allow_rownames_toggle = TRUE,
-                                na_string = NULL,
-                                allowed_field_delimiters = NULL),
+      actionLink(ns("open_tabular_modal"), "or load your own table-like file"),
 
     # Marker input
     if (allow_marker_filtering)
@@ -72,6 +68,20 @@ fafreqs_widget <- function(input, output, session, id) {
     }
   })
 
+  # Custom table loader inside a modal
+  observeEvent(input$open_tabular_modal, {
+    showModal(modalDialog(
+      title = "Load tabular frequency file",
+      fade = FALSE,
+      p("Load a CSV, TSV or other tabular file. Specify the column separators and other settings to match the structure of your file."),
+      tabular_data_loader_input(session$ns("custom_freqt_file"),
+                                allow_header_toggle = TRUE,
+                                allow_rownames_toggle = TRUE,
+                                na_string = NULL,
+                                allowed_field_delimiters = NULL,
+                                cols = 2)
+    ))
+  })
   custom_df <- callModule(tabular_data_loader, "custom_freqt_file")
 
   # User provided frequency tables
