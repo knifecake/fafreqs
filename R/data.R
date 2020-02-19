@@ -12,6 +12,18 @@
 #'
 #' \item{ft_popstr_israel_carmel_druze}{Israel (Carmel) - Druze}
 #'
+#' \item{ft_popstr_cambodia_cambodian}{Cambodia - Cambodian}
+#'
+#' \item{ft_popstr_china_dai}{China - Dai}
+#'
+#' \item{ft_popstr_china_daur}{China - Daur}
+#'
+#' \item{ft_popstr_china_han}{China - Han}
+#'
+#' \item{ft_popstr_japan_japanese}{Japan - Japanese}
+#'
+#' \item{ft_popstr_siberia_yakut}{Siberia - Yakut}
+#'
 #' }
 #'
 #' @source \url{http://spsmart.cesga.es/popstr.php}
@@ -25,6 +37,25 @@
 
 #' @rdname data_popstr
 "ft_popstr_israel_carmel_druze"
+
+#' @rdname data_popstr
+"ft_popstr_cambodia_cambodian"
+
+#' @rdname data_popstr
+"ft_popstr_china_dai"
+
+#' @rdname data_popstr
+"ft_popstr_china_daur"
+
+#' @rdname data_popstr
+"ft_popstr_china_han"
+
+#' @rdname data_popstr
+"ft_popstr_japan_japanese"
+
+#' @rdname data_popstr
+"ft_popstr_siberia_yakut"
+
 
 #' US Caucasian allele frequencies
 #'

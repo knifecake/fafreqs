@@ -40,6 +40,8 @@ markers <- function(x) {
 #' @export
 filter_markers <- function(x, markers) {
   x$TABLE <- x$TABLE[markers, ]
+  x$SAMPLE_SIZES <- x$SAMPLE_SIZES[markers]
+  x$H_OBS <- x$H_OBS[markers]
 
   x
 }

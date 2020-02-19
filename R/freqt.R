@@ -92,14 +92,20 @@ print.freqt <- function(x, verbose = FALSE, ...) {
     else
       cat("Sample size: ", min_n, "\n")
 
-    if (any(!is.na(ns)))
+    if (any(is.na(ns)))
       cat("(Some sample sizes unknown)\n")
   }
 
   if (verbose)
     print(df)
-  else
-    cat(sprintf("\nData for %d markers.\n", length(markers(x))))
+  else {
+    n_markers = length(markers(x))
+
+    if (n_markers == 1)
+      cat("\nData for 1 marker.\n")
+    else
+      cat(sprintf("\nData for %d markers.\n", length(markers(x))))
+  }
 
   invisible(df)
 }
