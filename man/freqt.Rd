@@ -4,14 +4,20 @@
 \alias{freqt}
 \title{Create a \code{freqt} object}
 \usage{
-freqt(x, name = "")
+freqt(x, name = "", n = NULL, h_obs = NULL)
 }
 \arguments{
 \item{x}{a \code{\link{data.frame}} where cell \code{(i, j)} contains the
 frequency of allele \code{j} of marker \code{i}. The row names of \code{x}
 should be the marker names.}
 
-\item{name}{(optional, default = "") the name of the frequency database}
+\item{name}{the name of the frequency database}
+
+\item{n}{a named list describing the sample size used to compute the allele
+frequencies for each marker}
+
+\item{h_obs}{a named list describing the observed heterozygosity for each
+marker}
 }
 \value{
 a \code{freqt} objet

@@ -14,11 +14,12 @@
 #' sheets.}
 #'
 #' \item{\code{read_familias}}{Supports reading from a Familias frequency
-#' database file.}
+#' database file. The Familias importer does not support reading the number of
+#' individuals as it is not included in Familias data files.}
 #'
-#' \item{\code{read_strider}}{Supports extracting frequency data from the STRidER
-#' 2.0 XML database. Requires that the parameter \code{origin} is supplied and
-#' that it matches one of the keys in the STRidER database.}
+#' \item{\code{read_strider}}{Supports extracting frequency data from the
+#' STRidER 2.0 XML database. Requires that the parameter \code{origin} is
+#' supplied and that it matches one of the keys in the STRidER database.}
 #'
 #' }
 #'
@@ -27,6 +28,7 @@
 #' @param origin   (only for read_strider) which population group to choose
 #' @return a \code{\link{freqt}} object with the given data
 #'
+#' @importFrom utils read.csv
 #' @name importing_data
 
 #' @rdname importing_data
@@ -48,7 +50,10 @@ read_popstr <- function(filename, name = "") {
   df <- data[4:(ncols - 6)]
   row.names(df) <- data$STR
 
-  freqt(df, name)
+  ns <- data$N
+  names(ns) <- data$STR
+
+  freqt(df, name, ns)
 }
 
 #' @rdname importing_data
@@ -57,9 +62,10 @@ read_nist <- function(filename, name = "") {
   data <- read.csv(filename, header = T, sep = ";", dec = ".")
 
   df <- t(data[3:(nrow(data) - 4), 2:ncol(data)])
+  n <- data[1, 2:ncol(data)]
   colnames(df) <- as.character(data[3:(nrow(data) - 4), 1])
 
-  freqt(df, name)
+  freqt(df, name, n)
 }
 
 #' @rdname importing_data
@@ -121,14 +127,17 @@ read_familias <- function(filename, name) {
   freqt(as.data.frame(t(as.data.frame(lapply(wide_freq, unlist)))), name = name)
 }
 
-library(xml2)
+#' @rdname importing_data
+#' @export
 read_strider <- function(filename, name = "", origin = "") {
-  xml <- read_xml(filename)
+  stopifnot(requireNamespace("xml2", quietly = TRUE))
 
-  markers <- unlist(as_list(xml_find_all(xml, "/frequencies/marker/alleles[node()]/../name")))
+  xml <- xml2::read_xml(filename)
+
+  markers <- unlist(xml2::as_list(xml2::xml_find_all(xml, "/frequencies/marker/alleles[node()]/../name")))
 
   q <- sprintf("/frequencies/marker/alleles[node()]", origin)
-  all_alleles <- unlist(as_list(xml_find_all(xml, q)))
+  all_alleles <- unlist(xml2::as_list(xml_find_all(xml, q)))
   all_alleles <- unique(unlist(lapply(all_alleles, function(as) { strsplit(as, ", ") })))
 
   wide_freq <- lapply(markers, function(m) {
@@ -136,7 +145,7 @@ read_strider <- function(filename, name = "", origin = "") {
       f <- list()
       q <- sprintf("/frequencies/marker[name = \"%s\"]/origin[@name = \"%s\"]/frequency[@allele = \"%s\"]",
                    m, origin, a)
-      result <- xml_find_all(xml, q)
+      result <- xml2::xml_find_all(xml, q)
       if (length(result) > 0) {
         f[a] <- as.numeric(unlist(as_list(result)[1]))
       } else {

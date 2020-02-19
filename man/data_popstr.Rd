@@ -7,7 +7,7 @@
 \alias{ft_popstr_nw_spain}
 \alias{ft_popstr_israel_carmel_druze}
 \title{pop.STR frequency data}
-\format{An object of class \code{freqt} of length 2.}
+\format{An object of class \code{freqt} of length 4.}
 \source{
 \url{http://spsmart.cesga.es/popstr.php}
 }

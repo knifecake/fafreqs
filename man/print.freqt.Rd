@@ -4,10 +4,12 @@
 \alias{print.freqt}
 \title{Printing frequency tables}
 \usage{
-\method{print}{freqt}(x, ...)
+\method{print}{freqt}(x, verbose = FALSE, ...)
 }
 \arguments{
 \item{x}{a \code{\link{freqt}} object}
+
+\item{verbose}{wether to print the actual frequency table}
 
 \item{...}{further parameters}
 }

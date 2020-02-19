@@ -4,12 +4,12 @@
 \alias{alleles}
 \title{Get alleles of marker}
 \usage{
-alleles(x, marker)
+alleles(x, ms)
 }
 \arguments{
 \item{x}{a \code{freqt} object}
 
-\item{marker}{a marker name or index}
+\item{ms}{a marker name or a list of marker names}
 }
 \value{
 a list of allele names
@@ -17,4 +17,12 @@ a list of allele names
 \description{
 Returns all alleles found in the given \code{\link{freqt}} object for which
 the frequency is greater than 0.
+}
+\examples{
+# provided with only one marker, returns the possible alleles for that marker
+alleles(ft_popstr_europe, "CSF1PO")
+
+# provided with more than one marker, returns the union of the
+# possible alleles for each of the provided markers
+alleles(ft_popstr_europe, c("CSF1PO", "FGA"))
 }

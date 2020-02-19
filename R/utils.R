@@ -50,12 +50,106 @@ filter_markers <- function(x, markers) {
 #' the frequency is greater than 0.
 #'
 #' @param x a \code{freqt} object
-#' @param marker a marker name or index
+#' @param ms a marker name or a list of marker names
 #' @return a list of allele names
 #'
 #' @export
-alleles <- function(x, marker) {
-  colnames(x$TABLE[marker, !is.na(x$TABLE[marker, ])])
+#'
+#' @examples
+#' # provided with only one marker, returns the possible alleles for that marker
+#' alleles(ft_popstr_europe, "CSF1PO")
+#'
+#' # provided with more than one marker, returns the union of the
+#' # possible alleles for each of the provided markers
+#' alleles(ft_popstr_europe, c("CSF1PO", "FGA"))
+alleles <- function(x, ms) {
+  colnames(x$TABLE[ms, apply(!is.na(x$TABLE[ms, ]), 2, any)])
+}
+
+#' Get allele frequencies
+#'
+#' @param x a \code{\link{freqt}} object
+#' @param ms a marker or marker vector
+#' @param als an allele or allele vector. If none is provided all relevant
+#'   alleles will be returned for the selected markers.
+#'
+#' @return depending on the number of alleles provided a single number or a data
+#'   frame is returned with the request allele frequencies
+#' @export
+#'
+#' @examples
+#' # a single marker and allele returns a number
+#' frequencies(ft_popstr_europe, "FGA", 23)
+#'
+#' # multiple alleles result in a data.frame
+#' frequencies(ft_popstr_europe, "FGA", c(6, 23, 7, 23.2))
+#'
+#' # multiple markers and alleles also result in a data.frame
+#' frequencies(ft_popstr_europe, c("CSF1PO", "FGA"), c(6, 23, 7, 23.2))
+#'
+#' # if alleles are not specified then every non-zero frequency is returned
+#' frequencies(ft_popstr_europe, "FGA")
+#'
+#' # similarly, if multiple markers are provided any allele
+#' # with a non-zero frequency in any of the markers is returned
+#' frequencies(ft_popstr_europe, c("CSF1PO", "FGA"))
+frequencies <- function(x, ms, als = NULL) {
+  if (is.null(als)) {
+    als <- alleles(x, ms)
+  }
+  x$TABLE[ms, as.character(als)]
+}
+
+#' Normalize a frequency database
+#'
+#' Scales a frequency database so that allele frequencies sum up to one.
+#'
+#' @param x a \code{\link{freqt}} object
+#' @param ms a marker or a marker vector. If not provided, all markers are
+#'   scaled.
+#'
+#' @return a scaled version of the given frequency database
+#' @export
+#'
+#' @examples
+#' n <- normalize(ft_popstr_europe)
+#'
+#' # this is useful to check, but, in general, you should not
+#' # depend on the internal structure of a freqt object
+#' rowSums(n$TABLE, na.rm = TRUE)
+normalize <- function(x, ms = NULL) {
+  if (is.null(ms)) {
+    ms <- markers(x)
+  }
+
+  x$TABLE[ms, ] <- t(apply(x$TABLE[ms, ], 1, function(m) { m / sum(m, na.rm = TRUE) }))
+
+  x
+}
+
+#' Add a rogue allele column
+#'
+#' Adds an extra allele to every marker with frequency equal to 1 minus the sum
+#' of the frequencies of the alleles in that marker. Note: if the frequencies
+#' sum up to greater than one, then the rogue allele column will have negative
+#' frequencies.
+#'
+#' @param x a \code{\link{freqt}} object
+#' @param ms a marker or marker vector. If left undefined, then all markers are processed.
+#' @param name the name to give to the rogue allele
+#'
+#' @export
+#'
+#' @examples
+#' add_rogue_allele(ft_popstr_europe)
+add_rogue_allele <- function(x, ms = NULL, name = "99") {
+  if (is.null(ms)) {
+    ms <- markers(x)
+  }
+
+  x$TABLE[ms, name] <- 1 - rowSums(x$TABLE[ms, ], na.rm = TRUE)
+
+  x
 }
 
 #' Convert a \code{\link{freqt}} object to the pedtools \code{locusAttributes}

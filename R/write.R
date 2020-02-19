@@ -17,6 +17,7 @@
 #'   all available markers)
 #'
 #' @name exporting_data
+#' @importFrom utils write.csv
 #' @seealso \link{importing_data}
 
 #' @rdname exporting_data

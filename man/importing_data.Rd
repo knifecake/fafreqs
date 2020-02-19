@@ -5,6 +5,7 @@
 \alias{read_popstr}
 \alias{read_nist}
 \alias{read_familias}
+\alias{read_strider}
 \title{Parse common allele frequency data formats}
 \usage{
 read_popstr(filename, name = "")
@@ -12,6 +13,8 @@ read_popstr(filename, name = "")
 read_nist(filename, name = "")
 
 read_familias(filename, name)
+
+read_strider(filename, name = "", origin = "")
 }
 \arguments{
 \item{filename}{the path to the relevant CSV file}
@@ -39,11 +42,12 @@ additional formating. This function expexts a CSV file with only one of those
 sheets.}
 
 \item{\code{read_familias}}{Supports reading from a Familias frequency
-database file.}
+database file. The Familias importer does not support reading the number of
+individuals as it is not included in Familias data files.}
 
-\item{\code{read_strider}}{Supports extracting frequency data from the STRidER
-2.0 XML database. Requires that the parameter \code{origin} is supplied and
-that it matches one of the keys in the STRidER database.}
+\item{\code{read_strider}}{Supports extracting frequency data from the
+STRidER 2.0 XML database. Requires that the parameter \code{origin} is
+supplied and that it matches one of the keys in the STRidER database.}
 
 }
 }
