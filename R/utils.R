@@ -102,7 +102,7 @@ frequencies <- function(x, ms, als = NULL) {
   x$TABLE[ms, as.character(als)]
 }
 
-#' Normalize a frequency database
+#' Normalise a frequency database
 #'
 #' Scales a frequency database so that allele frequencies sum up to one.
 #'
@@ -114,12 +114,12 @@ frequencies <- function(x, ms, als = NULL) {
 #' @export
 #'
 #' @examples
-#' n <- normalize(ft_popstr_europe)
+#' n <- normalise(ft_popstr_europe)
 #'
 #' # this is useful to check, but, in general, you should not
 #' # depend on the internal structure of a freqt object
 #' rowSums(n$TABLE, na.rm = TRUE)
-normalize <- function(x, ms = NULL) {
+normalise <- function(x, ms = NULL) {
   if (is.null(ms)) {
     ms <- markers(x)
   }

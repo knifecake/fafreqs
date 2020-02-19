@@ -137,9 +137,18 @@ read_strider <- function(filename, name = "", origin = "") {
   markers <- unlist(xml2::as_list(xml2::xml_find_all(xml, "/frequencies/marker/alleles[node()]/../name")))
 
   q <- sprintf("/frequencies/marker/alleles[node()]", origin)
-  all_alleles <- unlist(xml2::as_list(xml_find_all(xml, q)))
+  all_alleles <- unlist(xml2::as_list(xml2::xml_find_all(xml, q)))
   all_alleles <- unique(unlist(lapply(all_alleles, function(as) { strsplit(as, ", ") })))
 
+  # retrieve sample sizes
+  ns <- lapply(markers, function(m) {
+    q <- sprintf("/frequencies/marker[name = \"%s\"]/origin[@name = \"%s\"]", m, origin)
+    result <- xml2::xml_find_first(xml, q)
+    xml2::xml_attr(result, "n")
+  })
+  names(ns) <- markers
+
+  # retireve allele frequencies
   wide_freq <- lapply(markers, function(m) {
     lapply(all_alleles, function (a) {
       f <- list()
@@ -147,7 +156,7 @@ read_strider <- function(filename, name = "", origin = "") {
                    m, origin, a)
       result <- xml2::xml_find_all(xml, q)
       if (length(result) > 0) {
-        f[a] <- as.numeric(unlist(as_list(result)[1]))
+        f[a] <- as.numeric(unlist(xml2::as_list(result)[1]))
       } else {
         f[a] <- 0
       }
@@ -157,5 +166,7 @@ read_strider <- function(filename, name = "", origin = "") {
 
   names(wide_freq) <- markers
 
-  freqt(as.data.frame(t(as.data.frame(lapply(wide_freq, unlist)))), name = name)
+  freqt(as.data.frame(t(as.data.frame(lapply(wide_freq, unlist)))),
+        name = name,
+        n = ns)
 }

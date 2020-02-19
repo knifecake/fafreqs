@@ -90,10 +90,12 @@ print.freqt <- function(x, verbose = FALSE, ...) {
     if (min_n != max_n)
       cat(sprintf("Sample size: ranging from %d to %d individuals\n", min_n, max_n))
     else
-      cat("Sample size: ", min_n, "\n")
+      cat("Sample size: ", min_n, "individuals.\n")
 
     if (any(is.na(ns)))
       cat("(Some sample sizes unknown)\n")
+  } else {
+    cat("No sample size data available.\n")
   }
 
   if (verbose)

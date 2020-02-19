@@ -14,31 +14,52 @@ fafreqs_widget_input <- function(id,
                                  allow_fafreqs_markersets = TRUE,
                                  allow_import_familias = TRUE,
                                  allow_import_csv = TRUE,
-                                 allow_marker_filtering = TRUE) {
+                                 allow_marker_filtering = TRUE,
+                                 allow_scaling = TRUE,
+                                 allow_rogue_allele = TRUE) {
 
   # create a namespace to avoid name collisions with other modules / other
   # instances of this one
   ns <- shiny::NS(id)
 
-  marker_input <- shiny::tagList(
-    shiny::selectInput(ns("markerset_preset"), "Marker presets", available_markersets),
-    shiny::textOutput(ns("included_markers")),
-    gezellig::multicolumn(5, shiny::checkboxGroupInput(ns("markerset"), "Markers"))
-  )
+  # prepare normalisation input
+
+
+  normalisation_choices <- c("Off" = "off")
+  if (allow_scaling)
+    normalisation_choices <- c(normalisation_choices, "Scale up to one" = "scale")
+  if (allow_rogue_allele)
+    normalisation_choices <- c(normalisation_choices, "Add rogue allele" = "rogue")
+
+  normalisation_input <- if (allow_scaling || allow_rogue_allele) {
+    shiny::radioButtons(ns("normalise"), "Frequency normalisation",
+                        choices = normalisation_choices)
+  } else {
+    shiny::tagList()
+  }
+
+  # prepare marker input
+  marker_input <- if (allow_marker_filtering) {
+    shiny::tagList(
+      shiny::selectInput(ns("markerset_preset"), "Marker presets", available_markersets),
+      shiny::textOutput(ns("included_markers")),
+      shiny::selectInput(ns("markerset"), "Included markers",
+                         choices = list(), multiple = TRUE)
+    )
+  } else {
+    shiny::tagList()
+  }
 
   shiny::tagList(
     # Dataset input
     if (allow_fafreqs_markersets)
-      shiny::selectInput(ns("preset_dataset"), "Select a preset dataset", available_datasets),
+      shiny::selectInput(ns("preset_dataset"), "Select a preset dataset", available_datasets()),
     if (allow_import_familias)
       shiny::fileInput(ns("custom_fam_file"), "or load a Familias frequency file"),
     if (allow_import_csv)
       shiny::actionLink(ns("open_tabular_modal"), "or load your own table-like file"),
-
-    # Marker input
-    if (allow_marker_filtering)
-      marker_input,
-    shiny::tags$div()
+    normalisation_input,
+    marker_input
   )
 }
 
@@ -73,7 +94,7 @@ fafreqs_widget <- function(input, output, session, id) {
                                           allow_rownames_toggle = TRUE,
                                           na_string = NULL,
                                           allowed_field_delimiters = NULL,
-                                          cols = 2)
+                                          ncols = 2)
     ))
   })
   custom_df <- shiny::callModule(gezellig::tabular_data_loader, "custom_freqt_file")
@@ -117,21 +138,10 @@ fafreqs_widget <- function(input, output, session, id) {
       if (input$markerset_preset != "all") {
         selected_markers <- eval(parse(text = input$markerset_preset))
       }
-      shiny::updateCheckboxGroupInput(session, "markerset",
-                                      choiceNames = markers(selected_dataset()),
-                                      choiceValues = markers(selected_dataset()),
-                                      selected = selected_markers)
+      shiny::updateSelectInput(session, "markerset",
+                               choices = markers(selected_dataset()),
+                               selected = selected_markers)
     }
-  })
-
-  # Output dataset
-  dataset <- shiny::reactive({
-    markers <- markers(selected_dataset())
-
-    if (shiny::isTruthy(input$markerset)) {
-        markers <- input$markerset
-    }
-    filter_markers(selected_dataset(), markers)
   })
 
   # Number of included markers output message
@@ -141,36 +151,46 @@ fafreqs_widget <- function(input, output, session, id) {
     sprintf("%d out of %d markers selected", selected_markers, total_markers)
   })
 
+  # Output dataset
+  dataset <- shiny::reactive({
+    # filter markers
+    markers <- markers(selected_dataset())
+
+    if (shiny::isTruthy(input$markerset)) {
+        markers <- input$markerset
+    }
+    res <- filter_markers(selected_dataset(), markers)
+
+    # scale / add rogue allele
+    if (isTruthy(input$scale) || (isTruthy(input$normalise) && input$normalise == "scale")) {
+      print("scaling...")
+      res <- normalise(res)
+    } else if (isTruthy(input$rogue) || (isTruthy(input$normalise) && input$normalise == "rogue")) {
+      print("rogueing...")
+      res <- add_rogue_allele(res)
+      print(as.data.frame(res))
+    }
+
+    res
+  })
+
   dataset
 }
 
 
 
 ###### Static
-available_datasets <- list("pop.STR - Europe (All)" = "ft_popstr_europe",
-                           "pop.STR - NW Spain" = "ft_popstr_nw_spain",
-                           "pop.STR - Israel (Carmel) - Druze" = "ft_popstr_israel_carmel_druze",
-                           "STRidER - Austria" = "ft_strider_austria",
-                           "STRidER - Belgium" = "ft_strider_belgium",
-                           "STRidER - Bosnia and Herzegowina" = "ft_strider_bosnia_herzegowina",
-                           "STRidER - Czech Republic" = "ft_strider_czech_republic",
-                           "STRidER - Denmark" = "ft_strider_denmark",
-                           "STRidER - Finland" = "ft_strider_finland",
-                           "STRidER - France" = "ft_strider_france",
-                           "STRidER - Germany" = "ft_strider_germany",
-                           "STRidER - Greece" = "ft_strider_greece",
-                           "STRidER - Hungary" = "ft_strider_hungary",
-                           "STRidER - Ireland" = "ft_strider_ireland",
-                           "STRidER - Montenegro" = "ft_strider_montenegro",
-                           "STRidER - Norway" = "ft_strider_norway",
-                           "STRidER - Poland" = "ft_strider_poland",
-                           "STRidER - Slovakia" = "ft_strider_slovakia",
-                           "STRidER - Slovenia" = "ft_strider_slovenia",
-                           "STRidER - Spain" = "ft_strider_spain",
-                           "STRidER - Sweden" = "ft_strider_sweden",
-                           "STRidER - Switzerland" = "ft_strider_switzerland",
-                           "From familias file" = "familias",
-                           "Custom" = "custom")
+available_datasets <- function() {
+  ad <- data(package = "fafreqs")$results[,3]
+  fts <- lapply(ad, function(t) { eval(parse(text = t)) })
+  names(ad) <- lapply(fts, function(t) { t$NAME })
+  ad["From Familias file"] = "familias"
+  ad["Custom"] = "custom"
+
+  ad
+}
+
+
 
 available_markersets <- list("All" = "all",
                              "Core 23" = "core23",
@@ -180,16 +200,3 @@ available_markersets <- list("All" = "all",
                              "Promega CS7" = "promega_cs7",
                              "USC AIM-STRs" = "usc_aim",
                              "NIST Mini-STRs" = "nist_mini")
-
-tweaks <-
-  list(shiny::tags$head(shiny::tags$style(shiny::HTML("
-                                 .multicol {
-                                 //height: 150px;
-                                 -webkit-column-count: 3; /* Chrome, Safari, Opera */
-                                 -moz-column-count: 3;    /* Firefox */
-                                 column-count: 3;
-                                 -moz-column-fill: auto;
-                                 -column-fill: auto;
-                                 }
-                                 "))
-  ))

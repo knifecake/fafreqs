@@ -9,7 +9,9 @@ fafreqs_widget_input(
   allow_fafreqs_markersets = TRUE,
   allow_import_familias = TRUE,
   allow_import_csv = TRUE,
-  allow_marker_filtering = TRUE
+  allow_marker_filtering = TRUE,
+  allow_normalisation = TRUE,
+  allow_rogue_allele = TRUE
 )
 }
 \arguments{

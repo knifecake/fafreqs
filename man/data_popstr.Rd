@@ -12,7 +12,7 @@
 \alias{ft_popstr_china_han}
 \alias{ft_popstr_japan_japanese}
 \alias{ft_popstr_siberia_yakut}
-\title{pop.STR frequency data}
+\title{pop.STR allele frequencies}
 \format{An object of class \code{freqt} of length 4.}
 \source{
 \url{http://spsmart.cesga.es/popstr.php}
