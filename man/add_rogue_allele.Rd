@@ -4,7 +4,7 @@
 \alias{add_rogue_allele}
 \title{Add a rogue allele column}
 \usage{
-add_rogue_allele(x, ms = NULL, name = "99")
+add_rogue_allele(x, ms = NULL, name = "rare")
 }
 \arguments{
 \item{x}{a \code{\link{freqt}} object}

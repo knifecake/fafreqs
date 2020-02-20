@@ -144,7 +144,7 @@ normalise <- function(x, ms = NULL) {
 #'
 #' @examples
 #' add_rogue_allele(ft_popstr_europe)
-add_rogue_allele <- function(x, ms = NULL, name = "99") {
+add_rogue_allele <- function(x, ms = NULL, name = "rare") {
   if (is.null(ms)) {
     ms <- markers(x)
   }

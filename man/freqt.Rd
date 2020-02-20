@@ -4,7 +4,7 @@
 \alias{freqt}
 \title{Create a \code{freqt} object}
 \usage{
-freqt(x, name = "", n = NULL, h_obs = NULL)
+freqt(x, name = "", n = NULL, h_obs = NULL, data_source = NULL)
 }
 \arguments{
 \item{x}{a \code{\link{data.frame}} where cell \code{(i, j)} contains the
@@ -18,6 +18,8 @@ frequencies for each marker}
 
 \item{h_obs}{a named list describing the observed heterozygosity for each
 marker}
+
+\item{data_source}{a description of the data source}
 }
 \value{
 a \code{freqt} objet

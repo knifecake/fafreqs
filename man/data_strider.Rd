@@ -23,7 +23,7 @@
 \alias{ft_strider_sweden}
 \alias{ft_strider_switzerland}
 \title{STRidER 2.0}
-\format{An object of class \code{freqt} of length 2.}
+\format{An object of class \code{freqt} of length 5.}
 \source{
 \url{https://strider.online/frequencies}
 }

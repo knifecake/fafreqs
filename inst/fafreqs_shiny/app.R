@@ -4,22 +4,34 @@ library(gezellig)
 
 ui <- fluidPage(
   titlePanel("fafreqs demo"),
-  sidebarLayout(
-    sidebarPanel = sidebarPanel(
-      fafreqs_widget_input("demo_loader",
-                           allow_scaling = TRUE,
-                           allow_rogue_allele = TRUE,
-                           allow_marker_filtering = TRUE)),
-    mainPanel = mainPanel(
-      p(
-        downloadButton("download_csv", "Download CSV"),
-        downloadButton("download_familias", "Download Familias")
-      ),
-      textOutput("freqt_description", container = tags$pre),
-      div(
-        tableOutput("table"),
-        class = "table-responsive"
+  tabsetPanel(
+    tabPanel(
+      title = "Main",
+      tags$div(
+        style = "margin-top: 10px",
+        sidebarLayout(
+          sidebarPanel = sidebarPanel(
+            fafreqs_widget_input("demo_loader",
+                                 allow_scaling = TRUE,
+                                 allow_rare_allele = TRUE,
+                                 allow_marker_filtering = TRUE)),
+          mainPanel = mainPanel(
+            p(
+              downloadButton("download_csv", "Download CSV"),
+              downloadButton("download_familias", "Download Familias")
+            ),
+            verbatimTextOutput("freqt_description"),
+            div(
+              tableOutput("table"),
+              class = "table-responsive"
+            )
+          )
+        )
       )
+    ),
+    tabPanel(
+      title = "About",
+      includeMarkdown("about.md")
     )
   )
 )

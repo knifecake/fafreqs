@@ -8,7 +8,10 @@
 #' @param allow_marker_filtering allow the user to select which markers are to
 #'   be used out of those present in the selected (or uploaded) frequency
 #'   database
+#' @param allow_scaling allow the user to scale the frequencies so that they sum up to 1
+#' @param allow_rare_allele allow the user to add an allele so that the frequencies sum up to 1
 #'
+#' @importFrom utils data
 #' @export
 fafreqs_widget_input <- function(id,
                                  allow_fafreqs_markersets = TRUE,
@@ -16,7 +19,7 @@ fafreqs_widget_input <- function(id,
                                  allow_import_csv = TRUE,
                                  allow_marker_filtering = TRUE,
                                  allow_scaling = TRUE,
-                                 allow_rogue_allele = TRUE) {
+                                 allow_rare_allele = TRUE) {
 
   # create a namespace to avoid name collisions with other modules / other
   # instances of this one
@@ -28,10 +31,10 @@ fafreqs_widget_input <- function(id,
   normalisation_choices <- c("Off" = "off")
   if (allow_scaling)
     normalisation_choices <- c(normalisation_choices, "Scale up to one" = "scale")
-  if (allow_rogue_allele)
+  if (allow_rare_allele)
     normalisation_choices <- c(normalisation_choices, "Add rogue allele" = "rogue")
 
-  normalisation_input <- if (allow_scaling || allow_rogue_allele) {
+  normalisation_input <- if (allow_scaling || allow_rare_allele) {
     shiny::radioButtons(ns("normalise"), "Frequency normalisation",
                         choices = normalisation_choices)
   } else {
@@ -77,8 +80,8 @@ fafreqs_widget_input <- function(id,
 fafreqs_widget <- function(input, output, session, id) {
 
   # Familias frequency tables
-  familias_freqt <- reactive({
-    if (isTruthy(input$custom_fam_file)) {
+  familias_freqt <- shiny::reactive({
+    if (shiny::isTruthy(input$custom_fam_file)) {
       read_familias(input$custom_fam_file$datapath, "Familias")
     }
   })
@@ -88,7 +91,7 @@ fafreqs_widget <- function(input, output, session, id) {
     shiny::showModal(shiny::modalDialog(
       title = "Load tabular frequency file",
       fade = FALSE,
-      p("Load a CSV, TSV or other tabular file. Specify the column separators and other settings to match the structure of your file."),
+      shiny::p("Load a CSV, TSV or other tabular file. Specify the column separators and other settings to match the structure of your file."),
       gezellig::tabular_data_loader_input(session$ns("custom_freqt_file"),
                                           allow_header_toggle = TRUE,
                                           allow_rownames_toggle = TRUE,
@@ -162,10 +165,10 @@ fafreqs_widget <- function(input, output, session, id) {
     res <- filter_markers(selected_dataset(), markers)
 
     # scale / add rogue allele
-    if (isTruthy(input$scale) || (isTruthy(input$normalise) && input$normalise == "scale")) {
+    if (shiny::isTruthy(input$scale) || (shiny::isTruthy(input$normalise) && input$normalise == "scale")) {
       print("scaling...")
       res <- normalise(res)
-    } else if (isTruthy(input$rogue) || (isTruthy(input$normalise) && input$normalise == "rogue")) {
+    } else if (shiny::isTruthy(input$rogue) || (shiny::isTruthy(input$normalise) && input$normalise == "rogue")) {
       print("rogueing...")
       res <- add_rogue_allele(res)
       print(as.data.frame(res))

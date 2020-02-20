@@ -10,8 +10,8 @@ fafreqs_widget_input(
   allow_import_familias = TRUE,
   allow_import_csv = TRUE,
   allow_marker_filtering = TRUE,
-  allow_normalisation = TRUE,
-  allow_rogue_allele = TRUE
+  allow_scaling = TRUE,
+  allow_rare_allele = TRUE
 )
 }
 \arguments{
@@ -27,6 +27,10 @@ tables included in the \code{fafreqs} package}
 \item{allow_marker_filtering}{allow the user to select which markers are to
 be used out of those present in the selected (or uploaded) frequency
 database}
+
+\item{allow_scaling}{allow the user to scale the frequencies so that they sum up to 1}
+
+\item{allow_rare_allele}{allow the user to add an allele so that the frequencies sum up to 1}
 }
 \description{
 Frequency database loader input

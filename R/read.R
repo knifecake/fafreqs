@@ -53,7 +53,7 @@ read_popstr <- function(filename, name = "") {
   ns <- data$N
   names(ns) <- data$STR
 
-  freqt(df, name, ns)
+  freqt(df, name, ns, data_source = "http://spsmart.cesga.es/popstr.php")
 }
 
 #' @rdname importing_data
@@ -62,10 +62,10 @@ read_nist <- function(filename, name = "") {
   data <- read.csv(filename, header = T, sep = ";", dec = ".")
 
   df <- t(data[3:(nrow(data) - 4), 2:ncol(data)])
-  n <- data[1, 2:ncol(data)]
+  ns <- data[1, 2:ncol(data)]
   colnames(df) <- as.character(data[3:(nrow(data) - 4), 1])
 
-  freqt(df, name, n)
+  freqt(df, name, ns, data_source = "https://strbase.nist.gov/NISTpop.htm")
 }
 
 #' @rdname importing_data
@@ -168,5 +168,6 @@ read_strider <- function(filename, name = "", origin = "") {
 
   freqt(as.data.frame(t(as.data.frame(lapply(wide_freq, unlist)))),
         name = name,
-        n = ns)
+        n = ns,
+        data_source = "https://strider.online/frequencies")
 }

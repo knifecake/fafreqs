@@ -1,8 +1,9 @@
-new_freqt <- function(x, name = NA_character_, sample_sizes = NULL, h_obs = NULL) {
+new_freqt <- function(x, name = NA_character_, sample_sizes = NULL, h_obs = NULL, data_source = NULL) {
   ft <- list(TABLE = x,
              NAME  = name,
              SAMPLE_SIZES = sample_sizes,
-             H_OBS = h_obs)
+             H_OBS = h_obs,
+             DATA_SOURCE = data_source)
 
   class(ft) <- "freqt"
 
@@ -23,17 +24,22 @@ validate_freqt <- function(x) {
 #'   frequencies for each marker
 #' @param h_obs a named list describing the observed heterozygosity for each
 #'   marker
+#' @param data_source a description of the data source
 #'
 #' @return a \code{freqt} objet
 #' @export
-freqt <- function(x, name = "", n = NULL, h_obs = NULL) {
+freqt <- function(x, name = "", n = NULL, h_obs = NULL, data_source = NULL) {
 
   x <- as.data.frame(x)
 
   # convert 0 to NA
   x[x == 0] <- NA
 
-  ft <- new_freqt(x, name = name, sample_sizes = n, h_obs = NULL)
+  ft <- new_freqt(x,
+                  name = name,
+                  sample_sizes = n,
+                  h_obs = h_obs,
+                  data_source = data_source)
   validate_freqt(ft)
 
   ft
@@ -96,6 +102,10 @@ print.freqt <- function(x, verbose = FALSE, ...) {
       cat("(Some sample sizes unknown)\n")
   } else {
     cat("No sample size data available.\n")
+  }
+
+  if (!is.null(x$DATA_SOURCE)) {
+    cat("Data source: ", x$DATA_SOURCE, "\n")
   }
 
   if (verbose)
