@@ -203,3 +203,11 @@ available_markersets <- list("All" = "all",
                              "Promega CS7" = "promega_cs7",
                              "USC AIM-STRs" = "usc_aim",
                              "NIST Mini-STRs" = "nist_mini")
+
+#' Launch the fafreqs GUI
+#'
+#' @seealso \code{\link{fafreqs_widget_input}}
+#' @export
+fafreqs_gui <- function() {
+  shiny::runApp(system.file('fafreqs_shiny', package='fafreqs'))
+}

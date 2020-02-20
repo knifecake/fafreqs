@@ -184,3 +184,18 @@ to_pedtools <- function(x) {
     )
   })
 }
+
+#' Convert rownames to the first column
+#'
+#' @param x a \code{\link[base]{data.frame}}
+#' @param name the column name for the row names
+#'
+#' @export
+rownames_to_column <- function(x, name = "X") {
+  df <- x
+  rownames(df) <- NULL
+  df <- cbind(rownames(x), df)
+  colnames(df) <- c(name, colnames(x))
+
+  df
+}
