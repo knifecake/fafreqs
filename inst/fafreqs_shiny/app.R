@@ -1,6 +1,7 @@
 library(shiny)
 library(fafreqs)
 library(gezellig)
+library(markdown)
 
 ui <- fluidPage(
   titlePanel("fafreqs demo"),
