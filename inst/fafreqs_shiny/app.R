@@ -3,8 +3,19 @@ library(fafreqs)
 library(gezellig)
 library(markdown)
 
+tweaks <- tags$head(
+  tags$style(
+    HTML(".btn-list .btn {
+         width: 100%;
+         margin-bottom: 1rem;
+         display: block;
+         }")
+  )
+)
+
 ui <- fluidPage(
-  titlePanel("fafreqs demo"),
+  tweaks,
+  titlePanel("fafreqs - Forensic allele frequency databases"),
   tabsetPanel(
     tabPanel(
       title = "Explore",
@@ -33,20 +44,20 @@ ui <- fluidPage(
       fluidRow(
         column(
           width = 4,
-          h3("Export to table file"),
+          h3("Export to other software"),
+          tags$div(class = "btn-list",
+            downloadButton("download_familias", "Export to Familias"),
+            downloadButton("download_euroformix", "Export to EuroForMix"),
+            downloadButton("download_casesolver", "Export to CaseSolver"),
+            downloadButton("download_lrmixstudio", "Export to LRmixStudio"),
+            downloadButton("download_relmix", "Export to relMix")
+          )
+        ),
+        column(
+          width = 4,
+          h3("Export to a table file"),
           wellPanel(
-            selectInput(
-              "preset_table_export",
-              "Target software",
-              choices = c(
-                "EuroForMix v1.11" = "euroformix",
-                "CaseSolver v1.6" = "casesolver",
-                "LRmix Studio v2.1.5" = "lrmixstudio",
-                "relMix v1.3" = "relmix",
-                "Custom" = "custom"
-              )
-            ),
-            helpText("Choose one of the preset configurations above or adjust the options yourself. To select the exported markers or apply normalisation to the frequencies go to the Explore tab."),
+            helpText("To select the exported markers or apply normalisation to the frequencies go to the Explore tab."),
             radioButtons(
               "orientation",
               label = "Table orientation",
@@ -65,17 +76,8 @@ ui <- fluidPage(
                 "Tab (\\t) - TSV" = "\t"
               )
             ),
-            downloadButton("exported_table_download",
-                           "Export")
-          )
-        ),
-
-        column(
-          width = 4,
-          h3("Export to other formats"),
-          wellPanel(
-            downloadButton("exported_familias_download",
-                           "Export to Familias")
+            checkboxInput("et_sample_size", "Include sample sizes"),
+            downloadButton("download_csv", "Download as CSV")
           )
         )
       )
@@ -101,45 +103,63 @@ server <- function(input, output, session) {
     print(freqt())
   })
 
-  # change settings when selecting a preset export format
-  observeEvent(input$preset_table_export, {
-    csv_ar <- c("euroformix", "casesolver", "lrmixstudio")
-    tsv_ar <- c("relmix")
-    if (input$preset_table_export %in% csv_ar) {
-      isolate({
-        updateRadioButtons(session, "orientation", selected = "alleles_in_rows")
-        updateRadioButtons(session, "field_separator", selected = ",")
-      })
-    } else if (input$preset_table_export %in% tsv_ar) {
-      isolate({
-        updateRadioButtons(session, "orientation", selected = "alleles_in_rows")
-        updateRadioButtons(session, "field_separator", selected = "\t")
-      })
-    }
-  })
-
-  output$exported_table_download <- downloadHandler(
-    filename = function() {
-      if (input$field_separator %in% c(",", ";"))
-        "frequencies.csv"
-      else
-        "frequencies.txt"
-    },
-    content = function(file) {
-      df <- if (input$orientation == "alleles_in_rows") {
-        df <- t(as.data.frame(freqt()))
-        rownames_to_column(df, "Allele")
-      } else {
-        rownames_to_column(as.data.frame(freqt()), "Marker")
-      }
-      write.table(df, file, sep = input$field_separator, row.names = FALSE)
-    }
-  )
-
-  output$exported_familias_download <- downloadHandler(
+  ### Export to other programs
+  output$download_familias <- downloadHandler(
     filename = "frequencies.txt",
     content = function(file) {
       write_familias(freqt(), file)
+    }
+  )
+
+  download_csv_ar <- downloadHandler(
+    filename = "frequencies.csv",
+    content = function(file) {
+      df <- t(as.data.frame(freqt()))
+      df <- rownames_to_column(df, "Allele")
+      write.table(df, file, sep = ",", row.names = FALSE, na = "0")
+    }
+  )
+
+  download_tsv_ar <- downloadHandler(
+    filename = "frequencies.tsv",
+    content = function(file) {
+      df <- t(as.data.frame(freqt()))
+      df <- rownames_to_column(df, "Allele")
+      write.table(df, file, sep = "\t", row.names = FALSE, na = "0")
+    }
+  )
+
+  output$download_euroformix <- download_csv_ar
+  output$download_casesolver <- download_csv_ar
+  output$download_lrmixstudio <- download_csv_ar
+  output$download_relmix <- download_tsv_ar
+
+
+  ### Table downloader
+  table_for_download <- reactive({
+    # save the frequency table to avoid reloading it all the time
+    ft <- freqt()
+
+    # generated table
+    df <- as.data.frame(ft)
+
+    # include sample sizes
+    if (isTruthy(input$et_sample_size) && !is.null(ft$SAMPLE_SIZES)) {
+      df$N <- as.numeric(ft$SAMPLE_SIZES)
+    }
+
+    # transpose table
+    if (input$orientation == "alleles_in_rows") {
+      rownames_to_column(t(df), "Alleles")
+    } else {
+      rownames_to_column(df, "Markers")
+    }
+  })
+
+  output$download_csv <- downloadHandler(
+    filename = "frequencies.csv",
+    content = function(file) {
+      write.table(table_for_download(), file, sep = ",", row.names = FALSE, na = "0")
     }
   )
 }
