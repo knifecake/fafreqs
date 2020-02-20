@@ -134,7 +134,11 @@ read_strider <- function(filename, name = "", origin = "") {
 
   xml <- xml2::read_xml(filename)
 
-  markers <- unlist(xml2::as_list(xml2::xml_find_all(xml, "/frequencies/marker/alleles[node()]/../name")))
+  q <- sprintf("/frequencies/marker/origin[@name = \"%s\"]/../name", origin)
+  defined_markers <- unlist(xml2::as_list(xml2::xml_find_all(xml, q)))
+  non_empty_markers <- unlist(xml2::as_list(xml2::xml_find_all(xml, "/frequencies/marker/alleles[node()]/../name")))
+
+  markers <- intersect(defined_markers, non_empty_markers)
 
   q <- sprintf("/frequencies/marker/alleles[node()]", origin)
   all_alleles <- unlist(xml2::as_list(xml2::xml_find_all(xml, q)))
