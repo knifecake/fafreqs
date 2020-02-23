@@ -68,7 +68,7 @@ Once a pedigree is loaded or created but before adding known genotypes,
 information about markers and allele frequencies can be loaded using the
 `pedtools::setMarkers()` function. This function takes a special list as
 its `locusAttributes` parameter that can be generated directly from a
-`freqt` object by calling `to_pedtools`.
+`freqt` object by calling `to_pedtools_locusAttributes`.
 
 ``` r
 library(pedtools)
@@ -84,15 +84,21 @@ library(fafreqs)
 
 ``` r
 p = nuclearPed(1)
-p = setMarkers(p, locusAttributes = to_pedtools(ft_nist_african_american))
+p = setMarkers(p, locusAttributes = to_pedtools_locusAttributes(ft_nist_african_american))
 
 # allele frequencies for the markers described in ft_nist_african_american are
 # attached to the pedigree
 afreq(p, "CSF1PO")
 ```
 
-    ##    7.0    8.0    9.0   10.0   11.0   12.0   13.0   14.0 
-    ## 0.0556 0.0556 0.0395 0.2500 0.2485 0.2953 0.0468 0.0088
+    ##        7.0        8.0        9.0       10.0       11.0       12.0       13.0 
+    ## 0.05559444 0.05559444 0.03949605 0.24997500 0.24847515 0.29527047 0.04679532 
+    ##       14.0 
+    ## 0.00879912
+
+If you prefer to obtain marker objects instead, you may use the function
+`to_pedtools_markers`. Keep in mind that it requires the pedigree to be
+defined beforehand.
 
 ## Included datasets
 

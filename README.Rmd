@@ -57,19 +57,21 @@ write_familias(ft_nist_african_american, "nist_african_american.txt")
 
 `fafreqs` can be used to set so-called `locusAttributes` in `ped` objects handled by the pedsuite set of R packages (see [`pedtools`](https://github.com/magnusdv/pedtools) and [`forrel`](https://github.com/magnusdv/forrel) for more information).
 
-Once a pedigree is loaded or created but before adding known genotypes, information about markers and allele frequencies can be loaded using the `pedtools::setMarkers()` function. This function takes a special list as its `locusAttributes` parameter that can be generated directly from a `freqt` object by calling `to_pedtools`.
+Once a pedigree is loaded or created but before adding known genotypes, information about markers and allele frequencies can be loaded using the `pedtools::setMarkers()` function. This function takes a special list as its `locusAttributes` parameter that can be generated directly from a `freqt` object by calling `to_pedtools_locusAttributes`.
 
 ```{r}
 library(pedtools)
 library(fafreqs)
 
 p = nuclearPed(1)
-p = setMarkers(p, locusAttributes = to_pedtools(ft_nist_african_american))
+p = setMarkers(p, locusAttributes = to_pedtools_locusAttributes(ft_nist_african_american))
 
 # allele frequencies for the markers described in ft_nist_african_american are
 # attached to the pedigree
 afreq(p, "CSF1PO")
 ```
+
+If you prefer to obtain marker objects instead, you may use the function `to_pedtools_markers`. Keep in mind that it requires the pedigree to be defined beforehand.
 
 ## Included datasets
 
