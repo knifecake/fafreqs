@@ -12,7 +12,7 @@ read_popstr(filename, name = "")
 
 read_nist(filename, name = "")
 
-read_familias(filename, name)
+read_familias(filename, name = "")
 
 read_strider(filename, name = "", origin = "")
 }

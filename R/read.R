@@ -70,7 +70,7 @@ read_nist <- function(filename, name = "") {
 
 #' @rdname importing_data
 #' @export
-read_familias <- function(filename, name) {
+read_familias <- function(filename, name = "") {
   conn <- file(description = filename, open = "r")
   lines <- readLines(conn)
 
@@ -122,9 +122,12 @@ read_familias <- function(filename, name) {
     })
   })
 
-  names(wide_freq) <- marker_names
+  #names(wide_freq) <- marker_names
 
-  freqt(as.data.frame(t(as.data.frame(lapply(wide_freq, unlist)))), name = name)
+  df <- as.data.frame(t(as.data.frame(lapply(wide_freq, unlist))))
+  rownames(df) <- marker_names
+
+  freqt(df, name)
 }
 
 #' @rdname importing_data

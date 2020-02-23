@@ -154,6 +154,38 @@ add_rogue_allele <- function(x, ms = NULL, name = "rare") {
   x
 }
 
+#' Convert a \code{\link{freqt}} object to a list of marker objects
+#'
+#' This function converts a frequency table object into a list of pedtools \code{\link[pedtools]{marker}} objects.
+#'
+#' @param x a \code{freqt} object
+#' @param ped a \code{\link[pedtools]{ped}} object
+#' @param scale wether to scale allele frequencies so that they sum up to one (which is required by pedtools)
+#' @return a list of \code{\link[pedtools]{marker}} objects
+#'
+#' @examples
+#' library(pedtools)
+#' p <- nuclearPed(1)
+#' p <- setMarkers(p, m = to_pedtools_markers(ft_nist_african_american, p))
+#'
+#' @seealso \code{\link{to_pedtools_locusAttributes}}
+#' @seealso \code{\link[pedtools]{marker_attach}}
+#'
+#' @export
+to_pedtools_markers <- function(x, ped, scale = TRUE) {
+  ms <- markers(x)
+
+  if (scale)
+    x <- normalise(x)
+
+  lapply(ms, function(m) {
+    pedtools::marker(ped,
+      alleles = alleles(x, m),
+      afreq = as.numeric(x$TABLE[m, alleles(x, m)]),
+      name = m)
+  })
+}
+
 #' Convert a \code{\link{freqt}} object to the pedtools \code{locusAttributes}
 #' format.
 #'
@@ -162,26 +194,30 @@ add_rogue_allele <- function(x, ms = NULL, name = "rare") {
 #' package such as forrel.
 #'
 #' @param x a \code{freqt} object
+#' @param scale wether to scale allele frequencies so that they sum up to one
+#'   (which is required by pedtools)
 #' @return a \code{pedtools}-compatible list of lists following the
 #'   \code{locusAttributes} definition
 #'
 #' @examples
 #' library(pedtools)
-#' p = nuclearPed(1)
-#' p = setMarkers(p, locusAttributes = to_pedtools(ft_nist_african_american))
+#' p <- nuclearPed(1)
+#' p <- setMarkers(p, locusAttributes = to_pedtools_locusAttributes(ft_nist_african_american))
 #'
+#' @seealso \code{\link{to_pedtools_markers}}
 #' @seealso \code{\link[pedtools]{marker_attach}}
 #'
 #' @export
-to_pedtools <- function(x) {
+to_pedtools_locusAttributes <- function(x, scale = TRUE) {
   ms <- markers(x)
 
+  if (scale)
+    x <- normalise(x)
+
   lapply(ms, function(m) {
-    list(
-      alleles = alleles(x, m),
-      afreq = as.numeric(x$TABLE[m, alleles(x, m)]),
-      name = m
-    )
+    list(alleles = alleles(x, m),
+         afreq = as.numeric(x$TABLE[m, alleles(x, m)]),
+         name = m)
   })
 }
 
