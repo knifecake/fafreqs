@@ -37,6 +37,9 @@ read_popstr <- function(filename, name = "") {
   # load data
   data <- read.csv(filename, header = T, sep = ";", dec = ".")
 
+  # remove not genotyped markers
+  data <- data[data[,3] != 0, ]
+
   ncols <- ncol(data)
 
   # remove `freq_` prefix from allele column names

@@ -56,6 +56,48 @@
 #' @rdname data_popstr
 "ft_popstr_siberia_yakut"
 
+#' @rdname data_popstr
+"ft_popstr_central_african_republic_biaka_pygmies"
+
+#' @rdname data_popstr
+"ft_popstr_d_r_congo_mbuti_pygmies"
+
+#' @rdname data_popstr
+"ft_popstr_kenya_bantu_ne"
+
+#' @rdname data_popstr
+"ft_popstr_namibia_san"
+
+#' @rdname data_popstr
+"ft_popstr_nigeria_yoruba"
+
+#' @rdname data_popstr
+"ft_popstr_senegal_mandenka"
+
+#' @rdname data_popstr
+"ft_popstr_somalia"
+
+#' @rdname data_popstr
+"ft_popstr_south_africa_bantu"
+
+#' @rdname data_popstr
+"ft_popstr_brazil_karitiana"
+
+#' @rdname data_popstr
+"ft_popstr_brazil_surui"
+
+#' @rdname data_popstr
+"ft_popstr_colombia_colombian"
+
+#' @rdname data_popstr
+"ft_popstr_dominican_republic"
+
+#' @rdname data_popstr
+"ft_popstr_mexico_maya"
+
+#' @rdname data_popstr
+"ft_popstr_mexico_pima"
+
 
 #' US Allele frequencies
 #'
