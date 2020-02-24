@@ -105,3 +105,73 @@ ft_popstr_mexico_pima <-
   read_popstr("data-raw/popSTR-mexico-pima.csv",
               "pop.STR - Mexico - Pima")
 usethis::use_data(ft_popstr_mexico_pima, overwrite = TRUE)
+
+ft_popstr_israel_central_palestinian <-
+  read_popstr("data-raw/popSTR-israel-central-palestinian.csv",
+              "pop.STR - Israel (Central) - Palestinian")
+usethis::use_data(ft_popstr_israel_central_palestinian, overwrite = TRUE)
+
+ft_popstr_israel_negev_bedouin <-
+  read_popstr("data-raw/popSTR-israel-negev-bedouin.csv",
+              "pop.STR - Israel (Negev) - Bedouin")
+usethis::use_data(ft_popstr_israel_negev_bedouin, overwrite = TRUE)
+
+ft_popstr_bougainville_nan_melanesian <-
+  read_popstr("data-raw/popSTR-bougainville-NAN-melanesian.csv",
+              "pop.STR - Bougainville - NAN Melanesian")
+usethis::use_data(ft_popstr_bougainville_nan_melanesian, overwrite = TRUE)
+
+ft_popstr_new_guinea_papuan <-
+  read_popstr("data-raw/popSTR-new-guinea-papuan.csv",
+              "pop.STR - New Guinea - Papuan")
+usethis::use_data(ft_popstr_new_guinea_papuan, overwrite = TRUE)
+
+ft_popstr_china_uygur <-
+  read_popstr("data-raw/popSTR-china-uygur.csv",
+              "pop.STR - China - Uygur")
+usethis::use_data(ft_popstr_china_uygur, overwrite = TRUE)
+
+ft_popstr_pakistan_balochi <-
+  read_popstr("data-raw/popSTR-pakistan-balochi.csv",
+              "pop.STR - Pakistan - Balochi")
+usethis::use_data(ft_popstr_pakistan_balochi, overwrite = TRUE)
+
+ft_popstr_pakistan_burusho <-
+  read_popstr("data-raw/popSTR-pakistan-burusho.csv",
+              "pop.STR - Pakistan - Burusho")
+usethis::use_data(ft_popstr_pakistan_burusho, overwrite = TRUE)
+
+ft_popstr_pakistan_hazara <-
+  read_popstr("data-raw/popSTR-pakistan-hazara.csv",
+              "pop.STR - Pakistan - Hazara")
+usethis::use_data(ft_popstr_pakistan_hazara, overwrite = TRUE)
+
+ft_popstr_pakistan_kalash <-
+  read_popstr("data-raw/popSTR-pakistan-kalash.csv",
+              "pop.STR - Pakistan - Kalash")
+usethis::use_data(ft_popstr_pakistan_kalash, overwrite = TRUE)
+
+ft_popstr_pakistan_makrani <-
+  read_popstr("data-raw/popSTR-pakistan-makrani.csv",
+              "pop.STR - Pakistan - Makrani")
+usethis::use_data(ft_popstr_pakistan_makrani, overwrite = TRUE)
+
+ft_popstr_pakistan_pathan <-
+  read_popstr("data-raw/popSTR-pakistan-pathan.csv",
+              "pop.STR - Pakistan - Pathan")
+usethis::use_data(ft_popstr_pakistan_pathan, overwrite = TRUE)
+
+ft_popstr_pakistan_sindhi <-
+  read_popstr("data-raw/popSTR-pakistan-sindhi.csv",
+              "pop.STR - Pakistan - Sindhi")
+usethis::use_data(ft_popstr_pakistan_sindhi, overwrite = TRUE)
+
+ft_popstr_pakistan_balochi <-
+  read_popstr("data-raw/popSTR-pakistan-balochi.csv",
+              "pop.STR - Pakistan - Balochi")
+usethis::use_data(ft_popstr_pakistan_balochi, overwrite = TRUE)
+
+ft_popstr_algeria_mzab_mozabite <-
+  read_popstr("data-raw/popSTR-algeria-mzab-mozabite.csv",
+              "pop.STR - Algeria (Mzab) - Mozabite")
+usethis::use_data(ft_popstr_algeria_mzab_mozabite, overwrite = TRUE)

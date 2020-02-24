@@ -8,7 +8,7 @@
 \alias{ft_nist_african_american}
 \alias{ft_nist_hispanic}
 \alias{ft_nist_all}
-\title{US Allele frequencies}
+\title{NIST: US Allele frequencies}
 \format{An object of class \code{freqt} of length 5.}
 \source{
 \url{https://strbase.nist.gov/NISTpop.htm}
