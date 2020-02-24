@@ -1,3 +1,20 @@
+### Running this application on your own computer
+
+You may run this application locally on your own computer by installing the `fafreqs` package and some additional dependencies. Paste the following code into an R interactive session
+```R
+install.packages(c("shiny", "markdown", "devtools"))
+devtools::install_github("knifecake/gezellig")
+devtools::install_github("knifecake/fafreqs")
+```
+
+Once installed you may run the application by issuing the commands
+
+```R
+library(fafreqs)
+fafreqs_gui()
+```
+An internet browser should be launched automatically after the last command.
+
 ### About fafreqs
 
 `fafreqs` is an compilation of allele frequency databases with a focus on DNA markers commonly used in forsensics. The frequency databases available on this package come from multiple sources and only minimal processing has been carried out to include them in this package. In general, research on allele frequencies generally focuses on a particular population group and this is reflected in this package.

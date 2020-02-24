@@ -25,6 +25,13 @@ Once you have `devtools`, the `fafreqs` package can be installed with
 devtools::install_github("knifecake/fafreqs")
 ```
 
+Suggested dependencies should be installed automatically by `devtools`. If after running the previous commands you find that `fafreqs` is still not working you can try installing the dependencies yourself by running
+
+```{r eval=FALSE}
+install.packages(c("shiny", "markdown", "devtools"))
+devtools::install_github("knifecake/gezellig")
+devtools::install_github("knifecake/fafreqs")
+```
 
 
 ## Example usage
@@ -59,12 +66,12 @@ write_familias(ft_nist_african_american, "nist_african_american.txt")
 
 Once a pedigree is loaded or created but before adding known genotypes, information about markers and allele frequencies can be loaded using the `pedtools::setMarkers()` function. This function takes a special list as its `locusAttributes` parameter that can be generated directly from a `freqt` object by calling `to_pedtools_locusAttributes`.
 
-```{r}
-library(pedtools)
-library(fafreqs)
+```{r message=FALSE, warning=FALSE}
+library(pedtools, quietly = TRUE)
+library(fafreqs, quietly = TRUE)
 
-p = nuclearPed(1)
-p = setMarkers(p, locusAttributes = to_pedtools_locusAttributes(ft_nist_african_american))
+p <- nuclearPed(1)
+p <- setMarkers(p, locusAttributes = to_pedtools_locusAttributes(ft_nist_african_american))
 
 # allele frequencies for the markers described in ft_nist_african_american are
 # attached to the pedigree

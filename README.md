@@ -29,6 +29,16 @@ Once you have `devtools`, the `fafreqs` package can be installed with
 devtools::install_github("knifecake/fafreqs")
 ```
 
+Suggested dependencies should be installed automatically by `devtools`.
+If after running the previous commands you find that `fafreqs` is still
+not working you can try installing the dependencies yourself by running
+
+``` r
+install.packages(c("shiny", "markdown", "devtools"))
+devtools::install_github("knifecake/gezellig")
+devtools::install_github("knifecake/fafreqs")
+```
+
 ## Example usage
 
 Once installed, datasets become available after loading the package
@@ -71,20 +81,11 @@ its `locusAttributes` parameter that can be generated directly from a
 `freqt` object by calling `to_pedtools_locusAttributes`.
 
 ``` r
-library(pedtools)
-library(fafreqs)
-```
+library(pedtools, quietly = TRUE)
+library(fafreqs, quietly = TRUE)
 
-    ## 
-    ## Attaching package: 'fafreqs'
-
-    ## The following object is masked from 'package:pedtools':
-    ## 
-    ##     alleles
-
-``` r
-p = nuclearPed(1)
-p = setMarkers(p, locusAttributes = to_pedtools_locusAttributes(ft_nist_african_american))
+p <- nuclearPed(1)
+p <- setMarkers(p, locusAttributes = to_pedtools_locusAttributes(ft_nist_african_american))
 
 # allele frequencies for the markers described in ft_nist_african_american are
 # attached to the pedigree
