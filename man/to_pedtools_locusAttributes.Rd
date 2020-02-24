@@ -24,8 +24,8 @@ package such as forrel.
 }
 \examples{
 library(pedtools)
-p = nuclearPed(1)
-p = setMarkers(p, locusAttributes = to_pedtools_locusAttributes(ft_nist_african_american))
+p <- nuclearPed(1)
+p <- setMarkers(p, locusAttributes = to_pedtools_locusAttributes(ft_nist_african_american))
 
 }
 \seealso{

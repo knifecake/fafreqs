@@ -42,6 +42,78 @@ filter_markers <- function(x, markers) {
   x$TABLE <- x$TABLE[markers, ]
   x$SAMPLE_SIZES <- x$SAMPLE_SIZES[markers]
   x$H_OBS <- x$H_OBS[markers]
+  x$CHROMS <- x$CHROMS[markers]
+
+  x
+}
+
+#' Standarise marker names
+#'
+#' @param x a \code{\link{freqt}} object
+#'
+#' @return an updated version of \code{x} where the marker names have been standarised
+#' @export
+#'
+#' @seealso \code{\link{standard_marker_names}}
+#'
+#' @examples
+#' # vWA is changed to VWA
+#' markers(standarise_names(ft_nist_african_american))
+standarise_names <- function(x) {
+  std <- standard_marker_names(markers(x))
+  rownames(x$TABLE) <- std
+
+  if (!is.null(x$SAMPLE_SIZES))
+    names(x$SAMPLE_SIZES) <- std
+
+  if (!is.null(x$CHROMS))
+    names(x$CHROMS) <- std
+
+  if (!is.null(x$H_OBS))
+    names(x$H_OBS) <- std
+
+  x
+}
+
+#' Standarise marker names
+#'
+#' @param ms a marker name (or a character vector of marker names)
+#'
+#' @return an updated version of \code{ms} where the names have been standarised
+#' @export
+#'
+#' @seealso \code{\link{standarise_names}}
+#'
+#' @examples
+#' standard_marker_names("vWA") == "VWA"
+#'
+#' standard_marker_names(c("Penta D", "vWA")) == c("Penta_D", "VWA")
+standard_marker_names <- function(ms) {
+  gsub(" ", "_", paste0(toupper(substring(ms, 1, 1)), substring(ms, 2)))
+}
+
+#' Guess chromosome numbers
+#'
+#' @param x a \code{\link{freqt}} object
+#' @param as_numeric whether to convert chromosome names "X" and "Y" to the
+#'   number 23
+#'
+#' @return an updated version of \code{x} with the known chormosome numbers attached
+#' @export
+#'
+#' @examples
+#' guess_chromosome_numbers(ft_popstr_cambodia_cambodian)
+guess_chromosome_numbers <- function(x, as_numeric = FALSE) {
+  ns <- marker_metadata[markers(x), "Chrom"]
+
+  if (as_numeric) {
+    ns[ns == "X"] <- "23"
+    ns[ns == "Y"] <- "23"
+  }
+
+  names(ns) <- markers(x)
+
+  x$CHROMS <- ns
 
   x
 }
@@ -137,7 +209,8 @@ normalise <- function(x, ms = NULL) {
 #' frequencies.
 #'
 #' @param x a \code{\link{freqt}} object
-#' @param ms a marker or marker vector. If left undefined, then all markers are processed.
+#' @param ms a marker or marker vector. If left undefined, then all markers are
+#'   processed.
 #' @param name the name to give to the rogue allele
 #'
 #' @export

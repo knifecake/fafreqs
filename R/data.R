@@ -207,3 +207,11 @@
 
 #' @rdname data_strider
 "ft_strider_switzerland"
+
+
+#' Marker metadata
+#'
+#' A \code{data.frame} containing marker metadata (currently only chromosome number)
+#'
+#' @source https://strider.online/bundles/strbaseclient/downloads/Forensic_STR_Sequence_Structure_Guide_v5.xlsx
+"marker_metadata"

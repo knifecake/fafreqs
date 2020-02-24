@@ -77,6 +77,7 @@ ui <- fluidPage(
               )
             ),
             checkboxInput("et_sample_size", "Include sample sizes"),
+            checkboxInput("et_chromosomes", "Include chromosome numbers"),
             downloadButton("download_csv", "Download as CSV")
           )
         )
@@ -96,7 +97,20 @@ server <- function(input, output, session) {
   freqt <- callModule(fafreqs_widget, "demo_loader")
 
   output$table <- renderTable({
-    as.data.frame(freqt())
+    ft <- guess_chromosome_numbers(freqt())
+    df <- as.data.frame(ft)
+
+    # add sample sizes if known
+    if (!is.null(ft$SAMPLE_SIZES)) {
+      df <- cbind(as.integer(unlist(ft$SAMPLE_SIZES)), df)
+      colnames(df)[1] <- "N"
+    }
+
+    # try to guess chromosome numbers
+    df <- cbind(unlist(ft$CHROMS), df)
+    colnames(df)[1] <- "chr"
+
+    df
   }, striped = TRUE, rownames = TRUE, digits = 5)
 
   output$freqt_description <- renderPrint({
@@ -146,6 +160,10 @@ server <- function(input, output, session) {
     # include sample sizes
     if (isTruthy(input$et_sample_size) && !is.null(ft$SAMPLE_SIZES)) {
       df$N <- as.numeric(ft$SAMPLE_SIZES)
+    }
+
+    if (isTruthy(input$et_chromosomes)) {
+      df$chr <- marker_metadata[markers(ft), "Chrom"]
     }
 
     # transpose table

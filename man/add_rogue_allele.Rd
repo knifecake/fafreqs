@@ -9,7 +9,8 @@ add_rogue_allele(x, ms = NULL, name = "rare")
 \arguments{
 \item{x}{a \code{\link{freqt}} object}
 
-\item{ms}{a marker or marker vector. If left undefined, then all markers are processed.}
+\item{ms}{a marker or marker vector. If left undefined, then all markers are
+processed.}
 
 \item{name}{the name to give to the rogue allele}
 }

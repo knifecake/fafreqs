@@ -21,8 +21,8 @@ This function converts a frequency table object into a list of pedtools \code{\l
 }
 \examples{
 library(pedtools)
-p = nuclearPed(1)
-p = setMarkers(p, m = to_pedtools_markers(ft_nist_african_american, p))
+p <- nuclearPed(1)
+p <- setMarkers(p, m = to_pedtools_markers(ft_nist_african_american, p))
 
 }
 \seealso{

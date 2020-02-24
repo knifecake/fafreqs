@@ -1,7 +1,8 @@
-new_freqt <- function(x, name = NA_character_, sample_sizes = NULL, h_obs = NULL, data_source = NULL) {
+new_freqt <- function(x, name = NA_character_, sample_sizes = NULL, chroms = NULL, h_obs = NULL, data_source = NULL) {
   ft <- list(TABLE = x,
              NAME  = name,
              SAMPLE_SIZES = sample_sizes,
+             CHROMS = chroms,
              H_OBS = h_obs,
              DATA_SOURCE = data_source)
 
@@ -22,13 +23,14 @@ validate_freqt <- function(x) {
 #' @param name  the name of the frequency database
 #' @param n a named list describing the sample size used to compute the allele
 #'   frequencies for each marker
+#' @param chroms a named list describing the chromosome name (or number) for each marker
 #' @param h_obs a named list describing the observed heterozygosity for each
 #'   marker
 #' @param data_source a description of the data source
 #'
 #' @return a \code{freqt} objet
 #' @export
-freqt <- function(x, name = "", n = NULL, h_obs = NULL, data_source = NULL) {
+freqt <- function(x, name = "", n = NULL, chroms = NULL, h_obs = NULL, data_source = NULL) {
 
   x <- as.data.frame(x)
 

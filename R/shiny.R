@@ -10,6 +10,7 @@
 #'   database
 #' @param allow_scaling allow the user to scale the frequencies so that they sum up to 1
 #' @param allow_rare_allele allow the user to add an allele so that the frequencies sum up to 1
+#' @param allow_standarise_names allow the user to convert marker names to their standard form
 #'
 #' @importFrom utils data
 #' @export
@@ -19,7 +20,8 @@ fafreqs_widget_input <- function(id,
                                  allow_import_csv = TRUE,
                                  allow_marker_filtering = TRUE,
                                  allow_scaling = TRUE,
-                                 allow_rare_allele = TRUE) {
+                                 allow_rare_allele = TRUE,
+                                 allow_standarise_names = TRUE) {
 
   # create a namespace to avoid name collisions with other modules / other
   # instances of this one
@@ -62,6 +64,8 @@ fafreqs_widget_input <- function(id,
     if (allow_import_csv)
       shiny::actionLink(ns("open_tabular_modal"), "or load your own table-like file"),
     normalisation_input,
+    if (allow_standarise_names)
+      shiny::checkboxInput(ns("standarise_names"), "Standarise marker names"),
     marker_input
   )
 }
@@ -111,7 +115,6 @@ fafreqs_widget <- function(input, output, session, id) {
   })
 
   shiny::observe({
-    print(custom_freqt())
     if (shiny::isTruthy(custom_freqt())) {
       shiny::updateSelectInput(session, "preset_dataset", selected = "custom")
     }
@@ -125,13 +128,19 @@ fafreqs_widget <- function(input, output, session, id) {
 
   # Raw dataset we are working with (either a preset one or a custom one)
   selected_dataset <- shiny::reactive({
-    if (input$preset_dataset == "custom") {
+    ft <- if (input$preset_dataset == "custom") {
       custom_freqt()
     } else if (input$preset_dataset == "familias") {
       familias_freqt()
     } else {
       eval(parse(text = input$preset_dataset))
     }
+
+    if (shiny::isTruthy(input$standarise_names)) {
+      ft <- standarise_names(ft)
+    }
+
+    ft
   })
 
   # Update the list of markers when the raw dataset changes
@@ -140,6 +149,9 @@ fafreqs_widget <- function(input, output, session, id) {
       selected_markers <- markers(selected_dataset())
       if (input$markerset_preset != "all") {
         selected_markers <- eval(parse(text = input$markerset_preset))
+
+        if (input$standarise_names)
+          selected_markers <- standard_marker_names(selected_markers)
       }
       shiny::updateSelectInput(session, "markerset",
                                choices = markers(selected_dataset()),
@@ -166,12 +178,9 @@ fafreqs_widget <- function(input, output, session, id) {
 
     # scale / add rogue allele
     if (shiny::isTruthy(input$scale) || (shiny::isTruthy(input$normalise) && input$normalise == "scale")) {
-      print("scaling...")
       res <- normalise(res)
     } else if (shiny::isTruthy(input$rogue) || (shiny::isTruthy(input$normalise) && input$normalise == "rogue")) {
-      print("rogueing...")
       res <- add_rogue_allele(res)
-      print(as.data.frame(res))
     }
 
     res

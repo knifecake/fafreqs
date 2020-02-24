@@ -11,7 +11,8 @@ fafreqs_widget_input(
   allow_import_csv = TRUE,
   allow_marker_filtering = TRUE,
   allow_scaling = TRUE,
-  allow_rare_allele = TRUE
+  allow_rare_allele = TRUE,
+  allow_standarise_names = TRUE
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ database}
 \item{allow_scaling}{allow the user to scale the frequencies so that they sum up to 1}
 
 \item{allow_rare_allele}{allow the user to add an allele so that the frequencies sum up to 1}
+
+\item{allow_standarise_names}{allow the user to convert marker names to their standard form}
 }
 \description{
 Frequency database loader input

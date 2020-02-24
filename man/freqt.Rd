@@ -4,7 +4,7 @@
 \alias{freqt}
 \title{Create a \code{freqt} object}
 \usage{
-freqt(x, name = "", n = NULL, h_obs = NULL, data_source = NULL)
+freqt(x, name = "", n = NULL, chroms = NULL, h_obs = NULL, data_source = NULL)
 }
 \arguments{
 \item{x}{a \code{\link{data.frame}} where cell \code{(i, j)} contains the
@@ -15,6 +15,8 @@ should be the marker names.}
 
 \item{n}{a named list describing the sample size used to compute the allele
 frequencies for each marker}
+
+\item{chroms}{a named list describing the chromosome name (or number) for each marker}
 
 \item{h_obs}{a named list describing the observed heterozygosity for each
 marker}
