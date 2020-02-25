@@ -166,12 +166,62 @@ ft_popstr_pakistan_sindhi <-
               "pop.STR - Pakistan - Sindhi")
 usethis::use_data(ft_popstr_pakistan_sindhi, overwrite = TRUE)
 
-ft_popstr_pakistan_balochi <-
-  read_popstr("data-raw/popSTR-pakistan-balochi.csv",
-              "pop.STR - Pakistan - Balochi")
-usethis::use_data(ft_popstr_pakistan_balochi, overwrite = TRUE)
-
 ft_popstr_algeria_mzab_mozabite <-
   read_popstr("data-raw/popSTR-algeria-mzab-mozabite.csv",
               "pop.STR - Algeria (Mzab) - Mozabite")
 usethis::use_data(ft_popstr_algeria_mzab_mozabite, overwrite = TRUE)
+
+ft_popstr_china_hezhen <-
+  read_popstr("data-raw/popSTR-china-hezhen.csv",
+              "pop.STR - China - Hezhen")
+usethis::use_data(ft_popstr_china_hezhen, overwrite = TRUE)
+
+ft_popstr_china_lahu <-
+  read_popstr("data-raw/popSTR-china-lahu.csv",
+              "pop.STR - China - Lahu")
+usethis::use_data(ft_popstr_china_lahu, overwrite = TRUE)
+
+ft_popstr_china_miaozu <-
+  read_popstr("data-raw/popSTR-china-miaozu.csv",
+              "pop.STR - China - Miaozu")
+usethis::use_data(ft_popstr_china_miaozu, overwrite = TRUE)
+
+ft_popstr_china_mongola <-
+  read_popstr("data-raw/popSTR-china-mongola.csv",
+              "pop.STR - China - Mongola")
+usethis::use_data(ft_popstr_china_mongola, overwrite = TRUE)
+
+ft_popstr_china_naxi <-
+  read_popstr("data-raw/popSTR-china-naxi.csv",
+              "pop.STR - China - Naxi")
+usethis::use_data(ft_popstr_china_naxi, overwrite = TRUE)
+
+ft_popstr_china_oroqen <-
+  read_popstr("data-raw/popSTR-china-oroqen.csv",
+              "pop.STR - China - Oroqen")
+usethis::use_data(ft_popstr_china_oroqen, overwrite = TRUE)
+
+ft_popstr_china_she <-
+  read_popstr("data-raw/popSTR-china-she.csv",
+              "pop.STR - China - She")
+usethis::use_data(ft_popstr_china_she, overwrite = TRUE)
+
+ft_popstr_china_tu <-
+  read_popstr("data-raw/popSTR-china-tu.csv",
+              "pop.STR - China - Tu")
+usethis::use_data(ft_popstr_china_tu, overwrite = TRUE)
+
+ft_popstr_china_tujia <-
+  read_popstr("data-raw/popSTR-china-tujia.csv",
+              "pop.STR - China - Tujia")
+usethis::use_data(ft_popstr_china_tujia, overwrite = TRUE)
+
+ft_popstr_china_xibo <-
+  read_popstr("data-raw/popSTR-china-xibo.csv",
+              "pop.STR - China - Xibo")
+usethis::use_data(ft_popstr_china_xibo, overwrite = TRUE)
+
+ft_popstr_china_yizu <-
+  read_popstr("data-raw/popSTR-china-yizu.csv",
+              "pop.STR - China - Yizu")
+usethis::use_data(ft_popstr_china_yizu, overwrite = TRUE)

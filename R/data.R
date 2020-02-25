@@ -91,6 +91,67 @@
 #' @rdname data_popstr
 "ft_popstr_new_guinea_papuan"
 
+#' @rdname data_popstr
+"ft_popstr_china_uygur"
+
+#' @rdname data_popstr
+"ft_popstr_pakistan_balochi"
+
+#' @rdname data_popstr
+"ft_popstr_pakistan_burusho"
+
+#' @rdname data_popstr
+"ft_popstr_pakistan_hazara"
+
+#' @rdname data_popstr
+"ft_popstr_pakistan_kalash"
+
+#' @rdname data_popstr
+"ft_popstr_pakistan_makrani"
+
+#' @rdname data_popstr
+"ft_popstr_pakistan_pathan"
+
+#' @rdname data_popstr
+"ft_popstr_pakistan_sindhi"
+
+#' @rdname data_popstr
+"ft_popstr_algeria_mzab_mozabite"
+
+#' @rdname data_popstr
+"ft_popstr_china_hezhen"
+
+#' @rdname data_popstr
+"ft_popstr_china_lahu"
+
+#' @rdname data_popstr
+"ft_popstr_china_miaozu"
+
+#' @rdname data_popstr
+"ft_popstr_china_mongola"
+
+#' @rdname data_popstr
+"ft_popstr_china_naxi"
+
+#' @rdname data_popstr
+"ft_popstr_china_oroqen"
+
+#' @rdname data_popstr
+"ft_popstr_china_she"
+
+#' @rdname data_popstr
+"ft_popstr_china_tu"
+
+#' @rdname data_popstr
+"ft_popstr_china_tujia"
+
+#' @rdname data_popstr
+"ft_popstr_china_xibo"
+
+#' @rdname data_popstr
+"ft_popstr_china_yizu"
+
+
 #' NIST: US Allele frequencies
 #'
 #' Data extracted from the NIST 1036 Revised U.S. Population Dataset (July
@@ -137,52 +198,15 @@
 #'
 #' As per the STRidER website, be advised that in these tables, 1 represents all
 #' rare alleles shorter than the accepted allele categories. The value 99
-#' represents all rare alleles longer than the accepted categories. The
-#' following population groups are available:
-#'
-#' \describe{
-#'
-#' \item{ft_strider_austria}{Austria}
-#'
-#' \item{ft_strider_belgium}{Belgium}
-#'
-#' \item{ft_strider_bosnia_herzegowina}{Bosnia and Herzegowina}
-#'
-#' \item{ft_strider_czech_republic}{Czech Republic}
-#'
-#' \item{ft_strider_denmark}{Denmark}
-#'
-#' \item{ft_strider_finland}{Finland}
-#'
-#' \item{ft_strider_france}{France}
-#'
-#' \item{ft_strider_germany}{Germany}
-#'
-#' \item{ft_strider_greece}{Greece}
-#'
-#' \item{ft_strider_hungary}{Hungary}
-#'
-#' \item{ft_strider_ireland}{Ireland}
-#'
-#' \item{ft_strider_montenegro}{Montenegro}
-#'
-#' \item{ft_strider_norway}{Norway}
-#'
-#' \item{ft_strider_poland}{Poland}
-#'
-#' \item{ft_strider_slovakia}{Slovakia}
-#'
-#' \item{ft_strider_slovenia}{Slovenia}
-#'
-#' \item{ft_strider_spain}{Spain}
-#'
-#' \item{ft_strider_sweden}{Sweden}
-#'
-#' \item{ft_strider_switzerland}{Switzerland}
-#'
-#' }
+#' represents all rare alleles longer than the accepted categories.
 #'
 #' @source \url{https://strider.online/frequencies}
+#' @source Bodner M., Bastisch, I., Butler, J.M., Fimmers, R., Gill, P., Gusmão,
+#'   L., Morling, N., Phillips, C., Prinz, M., Schneider, P.M., Parson, W.
+#'   (2016), 'Recommendations of the DNA Commission of the International Society
+#'   for Forensic Genetics (ISFG) on quality control of autosomal Short Tandem
+#'   Repeat allele frequency databasing (STRidER).', Forensic Sci. Int. Genet.
+#'   24, 97-102
 #' @name data_strider
 
 #' @rdname data_strider
@@ -245,7 +269,10 @@
 
 #' Marker metadata
 #'
-#' A \code{data.frame} containing marker metadata (currently only chromosome number)
+#' A \code{data.frame} containing marker metadata (currently only chromosome
+#' number)
 #'
-#' @source https://strider.online/bundles/strbaseclient/downloads/Forensic_STR_Sequence_Structure_Guide_v5.xlsx
+#' @source
+#'   https://strider.online/bundles/strbaseclient/downloads/Forensic_STR_Sequence_Structure_Guide_v5.xlsx
+#'
 "marker_metadata"
