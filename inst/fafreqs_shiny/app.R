@@ -113,8 +113,10 @@ server <- function(input, output, session) {
     df
   }, striped = TRUE, rownames = TRUE, digits = 5)
 
-  output$freqt_description <- renderPrint({
-    print(freqt())
+  # frequency table description
+  output$freqt_description <- renderText({
+    desc <- capture.output(print(freqt()))
+    paste(strwrap(desc, width = 80, exdent = 2), collapse = "\n")
   })
 
   ### Export to other programs
