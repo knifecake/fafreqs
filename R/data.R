@@ -175,6 +175,7 @@
 #' @source Hill, C. R., Duewer, D. L., Kline, M. C., Coble, M. D., & Butler, J.
 #'   M. (2013). US population data for 29 autosomal STR loci. Forensic Science
 #'   International: Genetics, 7(3), e82-e83.
+#'   DOI:https://doi.org/10.1016/j.fsigen.2012.12.004
 #' @name data_nist
 
 

@@ -28,8 +28,6 @@ fafreqs_widget_input <- function(id,
   ns <- shiny::NS(id)
 
   # prepare normalisation input
-
-
   normalisation_choices <- c("Off" = "off")
   if (allow_scaling)
     normalisation_choices <- c(normalisation_choices, "Scale up to one" = "scale")
@@ -46,7 +44,10 @@ fafreqs_widget_input <- function(id,
   # prepare marker input
   marker_input <- if (allow_marker_filtering) {
     shiny::tagList(
-      shiny::selectInput(ns("markerset_preset"), "Marker presets", available_markersets),
+      shiny::selectInput(ns("markerset_preset"),
+                         "Marker presets",
+                         c("All" = "all",
+                           get_marker_kit(just_names = TRUE))),
       shiny::textOutput(ns("included_markers")),
       shiny::selectInput(ns("markerset"), "Included markers",
                          choices = list(), multiple = TRUE)
@@ -148,7 +149,7 @@ fafreqs_widget <- function(input, output, session, id) {
     if (shiny::isTruthy(input$markerset_preset)) {
       selected_markers <- markers(selected_dataset())
       if (input$markerset_preset != "all") {
-        selected_markers <- eval(parse(text = input$markerset_preset))
+        selected_markers <- get_marker_kit(input$markerset_preset)
 
         if (input$standarise_names)
           selected_markers <- standard_marker_names(selected_markers)
@@ -201,17 +202,6 @@ available_datasets <- function() {
 
   ad
 }
-
-
-
-available_markersets <- list("All" = "all",
-                             "Core 23" = "core23",
-                             "Core 23 + D6S1043" = "core24",
-                             "Illumina ForenSeq" = "illumina_forenseq",
-                             "Qiagen Investigator HDplex" = "qiagen_investigator",
-                             "Promega CS7" = "promega_cs7",
-                             "USC AIM-STRs" = "usc_aim",
-                             "NIST Mini-STRs" = "nist_mini")
 
 #' Launch the fafreqs GUI
 #'
