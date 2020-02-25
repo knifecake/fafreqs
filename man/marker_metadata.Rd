@@ -4,7 +4,7 @@
 \name{marker_metadata}
 \alias{marker_metadata}
 \title{Marker metadata}
-\format{An object of class \code{data.frame} with 136 rows and 1 columns.}
+\format{An object of class \code{data.frame} with 157 rows and 1 columns.}
 \source{
 https://strider.online/bundles/strbaseclient/downloads/Forensic_STR_Sequence_Structure_Guide_v5.xlsx
 }
