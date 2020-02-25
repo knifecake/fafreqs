@@ -181,3 +181,22 @@ read_strider <- function(filename, name = "", origin = "") {
         n = ns,
         data_source = "https://strider.online/frequencies")
 }
+
+#' Read data in allelic ladder format
+#'
+#' @param filename a filepath
+#' @param name the name of the dataset
+#' @param source the source of the dataset
+#' @param ... further parameters to \code{read.csv}
+#'
+#' @return a \code{\link{freqt}} object
+#' @export
+read_allelic_ladder <- function(filename, name = "", source = NULL, ...) {
+  data <- read.csv(filename, header = T, ...)
+
+  df <- t(data[3:nrow(data), 2:ncol(data)])
+  ns <- data[1, 2:ncol(data)]
+  colnames(df) <- as.character(data[3:nrow(data), 1])
+
+  freqt(df, name, ns, data_source = source)
+}

@@ -276,3 +276,43 @@
 #'   https://strider.online/bundles/strbaseclient/downloads/Forensic_STR_Sequence_Structure_Guide_v5.xlsx
 #'
 "marker_metadata"
+
+#' Cho 2003: South Korea
+#'
+#' Allele frequencies for nine STR loci namely, TH01, TPOX, CSF1PO, vWA, FESFPS,
+#' F13A01, D13S317, D7S820 and D16S539 were obtained from a sample of 437
+#' unrelated individuals living in Chungcheong-do, South Korea.
+#'
+#' @source Cho, N. S., Hwang, J. H., Lee, Y. A., & Park, I. H. (2003).
+#'   Population genetics of nine STR loci: TH01, TPOX, CSF1PO, vWA, FESFPS,
+#'   F13A01, D13S317, D7S820 and D16S539 in a Korean population. Forensic
+#'   science international, 137(1), 97-99.
+"ft_cho2003_south_korea"
+
+#' Ferdous 2010: Bangladesh
+#'
+#' Allele frequencies of ten autosomal STR loci, D3S1358, vWA, D16S539, D2S1338,
+#' D8S1179, D21S11, D18S51, D19S433, TH01, and FGA were investigated in Chakma
+#' and Tripura tribal populations of Bangladesh. In both the populations, all
+#' loci were in Hardy-Weinberg equilibrium except for FGA locus in Chakma and
+#' D21S11 in Tripura. All the loci were highly polymorphic in Chakma population
+#' with an observed heterozygosity  of 0.7 and moderately polymorphic in Tripura
+#' population . However, both the population showed least polymorphism at TH01
+#' locus . A comparison between Chakma and Tripura population data revealed
+#' statistically significant differences in allele frequency distribution for
+#' most of the loci. A similar comparison with the mainstream Bengali population
+#' using previously published data from this lab also showed significant
+#' difference in allele frequency with these two tribal populations.
+#'
+#' @source Ferdous, A., Ali, M. E., Alam, S., Hasan, M., Hossain, T., &
+#'   Akhteruzzaman, S. (2010). Allele Frequencies of 10 Autosomal STR Loci from
+#'   Chakma and Tripura Tribal Populations in Bangladesh. Molecular biology
+#'   international, 2010.
+#'
+#' @name ferbous2010
+
+#' @rdname ferbous2010
+"ft_ferdous2010_bangladesh_chakma"
+
+#' @rdname ferbous2010
+"ft_ferdous2010_bangladesh_tripura"

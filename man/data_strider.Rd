@@ -26,6 +26,13 @@
 \format{An object of class \code{freqt} of length 5.}
 \source{
 \url{https://strider.online/frequencies}
+
+Bodner M., Bastisch, I., Butler, J.M., Fimmers, R., Gill, P., Gusmão,
+  L., Morling, N., Phillips, C., Prinz, M., Schneider, P.M., Parson, W.
+  (2016), 'Recommendations of the DNA Commission of the International Society
+  for Forensic Genetics (ISFG) on quality control of autosomal Short Tandem
+  Repeat allele frequency databasing (STRidER).', Forensic Sci. Int. Genet.
+  24, 97-102
 }
 \usage{
 ft_strider_austria
@@ -69,50 +76,6 @@ ft_strider_switzerland
 \description{
 As per the STRidER website, be advised that in these tables, 1 represents all
 rare alleles shorter than the accepted allele categories. The value 99
-represents all rare alleles longer than the accepted categories. The
-following population groups are available:
-}
-\details{
-\describe{
-
-\item{ft_strider_austria}{Austria}
-
-\item{ft_strider_belgium}{Belgium}
-
-\item{ft_strider_bosnia_herzegowina}{Bosnia and Herzegowina}
-
-\item{ft_strider_czech_republic}{Czech Republic}
-
-\item{ft_strider_denmark}{Denmark}
-
-\item{ft_strider_finland}{Finland}
-
-\item{ft_strider_france}{France}
-
-\item{ft_strider_germany}{Germany}
-
-\item{ft_strider_greece}{Greece}
-
-\item{ft_strider_hungary}{Hungary}
-
-\item{ft_strider_ireland}{Ireland}
-
-\item{ft_strider_montenegro}{Montenegro}
-
-\item{ft_strider_norway}{Norway}
-
-\item{ft_strider_poland}{Poland}
-
-\item{ft_strider_slovakia}{Slovakia}
-
-\item{ft_strider_slovenia}{Slovenia}
-
-\item{ft_strider_spain}{Spain}
-
-\item{ft_strider_sweden}{Sweden}
-
-\item{ft_strider_switzerland}{Switzerland}
-
-}
+represents all rare alleles longer than the accepted categories.
 }
 \keyword{datasets}

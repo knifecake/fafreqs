@@ -12,6 +12,7 @@ https://strider.online/bundles/strbaseclient/downloads/Forensic_STR_Sequence_Str
 marker_metadata
 }
 \description{
-A \code{data.frame} containing marker metadata (currently only chromosome number)
+A \code{data.frame} containing marker metadata (currently only chromosome
+number)
 }
 \keyword{datasets}
