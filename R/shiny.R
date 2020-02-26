@@ -44,13 +44,15 @@ fafreqs_widget_input <- function(id,
   # prepare marker input
   marker_input <- if (allow_marker_filtering) {
     shiny::tagList(
+
+      shiny::selectInput(ns("markerset"), "Filter included markers",
+                         choices = list(), multiple = TRUE),
+      shiny::textOutput(ns("included_markers")),
+      shiny::helpText("Select markers to be used in the dataset manually in the box above or use the dropdown menu below to select all markers in one of the standard amplification kits."),
       shiny::selectInput(ns("markerset_preset"),
                          "Marker presets",
                          c("All" = "all",
-                           get_marker_kit(just_names = TRUE))),
-      shiny::textOutput(ns("included_markers")),
-      shiny::selectInput(ns("markerset"), "Included markers",
-                         choices = list(), multiple = TRUE)
+                           get_marker_kit(just_names = TRUE)))
     )
   } else {
     shiny::tagList()
@@ -96,16 +98,46 @@ fafreqs_widget <- function(input, output, session, id) {
     shiny::showModal(shiny::modalDialog(
       title = "Load tabular frequency file",
       fade = FALSE,
-      shiny::p("Load a CSV, TSV or other tabular file. Specify the column separators and other settings to match the structure of your file."),
-      gezellig::tabular_data_loader_input(session$ns("custom_freqt_file"),
-                                          allow_header_toggle = TRUE,
-                                          allow_rownames_toggle = TRUE,
-                                          na_string = NULL,
-                                          allowed_field_delimiters = NULL,
-                                          ncols = 2)
+      shiny::verticalLayout(
+        shiny::helpText("Load a CSV, TSV or other tabular file. Specify the column separators and other settings to match the structure of your file. This program expects one marker per row and one allele per column. If your file is arranged the opposite way, tick the 'Transpose table' checkbox to exchange rows and columns."),
+        gezellig::tabular_data_loader_input(session$ns("custom_freqt_file"),
+                                            allow_header_toggle = TRUE,
+                                            allow_rownames_toggle = TRUE,
+                                            na_string = NULL,
+                                            allowed_field_delimiters = NULL,
+                                            ncols = 2),
+        shiny::tags$p(" "),
+        shiny::textOutput(session$ns("custom_freqt_msgs"),
+                          container = shiny::tags$p)
+      ),
+      footer = shiny::tagList(
+        shiny::modalButton("Cancel"),
+        shiny::actionButton(session$ns("load_custom_freqt"), "Load", class = "btn-primary")
+      )
     ))
   })
-  custom_df <- shiny::callModule(gezellig::tabular_data_loader, "custom_freqt_file")
+
+  custom_df_prev <- shiny::callModule(gezellig::tabular_data_loader, "custom_freqt_file")
+
+  # describe the frequency table that would result from loading the current file
+  output$custom_freqt_msgs <- shiny::renderText({
+    cdfp <- custom_df_prev()
+    if (shiny::isTruthy(cdfp)) {
+      ms <- rownames(cdfp)
+      sprintf("Detected %d markers: %s. If it looks right, click Load.",
+              length(ms),
+              paste(ms, collapse = ", "))
+    } else {
+      "Waiting for input."
+    }
+  })
+
+  # hold frequency table until the user is done adjusting the loading parameters
+  custom_df <- shiny::reactive({
+    shiny::req(input$load_custom_freqt)
+    shiny::removeModal()
+    custom_df_prev()
+  })
 
   # User provided frequency tables
   custom_freqt <- shiny::reactive({
