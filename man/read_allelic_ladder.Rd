@@ -4,7 +4,7 @@
 \alias{read_allelic_ladder}
 \title{Read data in allelic ladder format}
 \usage{
-read_allelic_ladder(filename, name = "", source = NULL, ...)
+read_allelic_ladder(filename, name = "", source = NULL, h_obs = NULL, ...)
 }
 \arguments{
 \item{filename}{a filepath}
@@ -12,6 +12,9 @@ read_allelic_ladder(filename, name = "", source = NULL, ...)
 \item{name}{the name of the dataset}
 
 \item{source}{the source of the dataset}
+
+\item{h_obs}{offset with respect to the last row of the row containing the
+values for the observed heterozygosities}
 
 \item{...}{further parameters to \code{read.csv}}
 }

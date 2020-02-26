@@ -56,7 +56,11 @@ read_popstr <- function(filename, name = "") {
   ns <- data$N
   names(ns) <- data$STR
 
-  freqt(df, name, ns, data_source = "http://spsmart.cesga.es/popstr.php")
+  ho <- data[, ncols - 5]
+  names(ho) <- data$STR
+  ho <- as.list(ho)
+
+  freqt(df, name, ns, h_obs = ho, data_source = "http://spsmart.cesga.es/popstr.php")
 }
 
 #' @rdname importing_data
@@ -68,7 +72,9 @@ read_nist <- function(filename, name = "") {
   ns <- data[1, 2:ncol(data)]
   colnames(df) <- as.character(data[3:(nrow(data) - 4), 1])
 
-  freqt(df, name, ns, data_source = "https://strbase.nist.gov/NISTpop.htm")
+  ho <- as.list(data[nrow(data) - 3, 2:ncol(data)])
+
+  freqt(df, name, ns, h_obs = ho, data_source = "https://strbase.nist.gov/NISTpop.htm")
 }
 
 #' @rdname importing_data
@@ -187,16 +193,26 @@ read_strider <- function(filename, name = "", origin = "") {
 #' @param filename a filepath
 #' @param name the name of the dataset
 #' @param source the source of the dataset
+#' @param h_obs offset with respect to the last row of the row containing the
+#'   values for the observed heterozygosities
 #' @param ... further parameters to \code{read.csv}
 #'
 #' @return a \code{\link{freqt}} object
 #' @export
-read_allelic_ladder <- function(filename, name = "", source = NULL, ...) {
+read_allelic_ladder <- function(filename,
+                                name = "",
+                                source = NULL,
+                                h_obs = NULL,
+                                ...) {
   data <- read.csv(filename, header = T, ...)
 
   df <- t(data[3:nrow(data), 2:ncol(data)])
   ns <- data[1, 2:ncol(data)]
   colnames(df) <- as.character(data[3:nrow(data), 1])
 
-  freqt(df, name, ns, data_source = source)
+  ho <- if (!is.null(h_obs)) {
+    as.list(data[nrow(data) - h_obs, 2:ncol(data)])
+  } else NULL
+
+  freqt(df, name, ns, data_source = source, h_obs = ho)
 }

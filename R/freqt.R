@@ -40,6 +40,7 @@ freqt <- function(x, name = "", n = NULL, chroms = NULL, h_obs = NULL, data_sour
   ft <- new_freqt(x,
                   name = name,
                   sample_sizes = n,
+                  chroms = chroms,
                   h_obs = h_obs,
                   data_source = data_source)
   validate_freqt(ft)

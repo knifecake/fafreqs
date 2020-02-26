@@ -28,3 +28,29 @@ expected_heterozygosity <- function(x, ms = NULL) {
 
   1 - rowSums(frequencies(x, ms)^2, na.rm = TRUE)
 }
+
+#' Observed Heterozygosity
+#'
+#' @param x a \code{\link{freqt}} object
+#' @param ms a list of markers for which the observed heterozygosities will be
+#'   returned. By default they are returned for every marker in the given
+#'   \code{freqt} object.
+#'
+#' @return a numeric vector containing the observed heterozygosities
+#' @export
+#'
+#' @examples
+#' observed_heterozygosity(ft_cho2003_south_korea)
+observed_heterozygosity <- function(x, ms = NULL) {
+  if (is.null(x$H_OBS)) {
+    NULL
+  } else {
+    if (is.null(ms)) {
+      ms = markers(x)
+    }
+
+    ho <- as.numeric(x$H_OBS[ms])
+    names(ho) <- ms
+    ho
+  }
+}
