@@ -20,5 +20,5 @@ a numeric vector containing the observed heterozygosities
 Observed Heterozygosity
 }
 \examples{
-observed_heterozygosity(ft_cho2003_south_korea)
+observed_heterozygosity(ft_ferdous2010_bangladesh_chakma)
 }

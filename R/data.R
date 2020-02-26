@@ -268,28 +268,6 @@
 "ft_strider_switzerland"
 
 
-#' Marker metadata
-#'
-#' A \code{data.frame} containing marker metadata (currently only chromosome
-#' number)
-#'
-#' @source
-#'   https://strider.online/bundles/strbaseclient/downloads/Forensic_STR_Sequence_Structure_Guide_v5.xlsx
-#'
-"marker_metadata"
-
-#' Cho 2003: South Korea
-#'
-#' Allele frequencies for nine STR loci namely, TH01, TPOX, CSF1PO, vWA, FESFPS,
-#' F13A01, D13S317, D7S820 and D16S539 were obtained from a sample of 437
-#' unrelated individuals living in Chungcheong-do, South Korea.
-#'
-#' @source Cho, N. S., Hwang, J. H., Lee, Y. A., & Park, I. H. (2003).
-#'   Population genetics of nine STR loci: TH01, TPOX, CSF1PO, vWA, FESFPS,
-#'   F13A01, D13S317, D7S820 and D16S539 in a Korean population. Forensic
-#'   science international, 137(1), 97-99.
-"ft_cho2003_south_korea"
-
 #' Ferdous 2010: Bangladesh
 #'
 #' Allele frequencies of ten autosomal STR loci, D3S1358, vWA, D16S539, D2S1338,
@@ -317,3 +295,17 @@
 
 #' @rdname ferbous2010
 "ft_ferdous2010_bangladesh_tripura"
+
+
+
+
+
+#' Marker metadata
+#'
+#' A \code{data.frame} containing marker metadata (currently only chromosome
+#' number)
+#'
+#' @source
+#'   https://strider.online/bundles/strbaseclient/downloads/Forensic_STR_Sequence_Structure_Guide_v5.xlsx
+#'
+"marker_metadata"

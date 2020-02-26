@@ -40,7 +40,7 @@ expected_heterozygosity <- function(x, ms = NULL) {
 #' @export
 #'
 #' @examples
-#' observed_heterozygosity(ft_cho2003_south_korea)
+#' observed_heterozygosity(ft_ferdous2010_bangladesh_chakma)
 observed_heterozygosity <- function(x, ms = NULL) {
   if (is.null(x$H_OBS)) {
     NULL
