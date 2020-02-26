@@ -5,4 +5,4 @@ read_marker_metadata <- function(filename) {
 }
 
 marker_metadata <- read_marker_metadata("data-raw/marker_metadata.csv")
-usethis::use_data(marker_metadata, overwrite = TRUE)
+usethis::use_data(marker_metadata, overwrite = TRUE, internal = TRUE)
