@@ -32,7 +32,7 @@ fafreqs_widget_input <- function(id,
   if (allow_scaling)
     normalisation_choices <- c(normalisation_choices, "Scale up to one" = "scale")
   if (allow_rare_allele)
-    normalisation_choices <- c(normalisation_choices, "Add rogue allele" = "rogue")
+    normalisation_choices <- c(normalisation_choices, "Add 'rare' allele" = "rogue")
 
   normalisation_input <- if (allow_scaling || allow_rare_allele) {
     shiny::radioButtons(ns("normalise"), "Frequency normalisation",
