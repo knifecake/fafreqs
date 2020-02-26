@@ -12,7 +12,8 @@ fafreqs_widget_input(
   allow_marker_filtering = TRUE,
   allow_scaling = TRUE,
   allow_rare_allele = TRUE,
-  allow_standarise_names = TRUE
+  allow_standarise_names = TRUE,
+  allow_table_preview = TRUE
 )
 }
 \arguments{
@@ -29,11 +30,17 @@ tables included in the \code{fafreqs} package}
 be used out of those present in the selected (or uploaded) frequency
 database}
 
-\item{allow_scaling}{allow the user to scale the frequencies so that they sum up to 1}
+\item{allow_scaling}{allow the user to scale the frequencies so that they sum
+up to 1}
 
-\item{allow_rare_allele}{allow the user to add an allele so that the frequencies sum up to 1}
+\item{allow_rare_allele}{allow the user to add an allele so that the
+frequencies sum up to 1}
 
-\item{allow_standarise_names}{allow the user to convert marker names to their standard form}
+\item{allow_standarise_names}{allow the user to convert marker names to their
+standard form}
+
+\item{allow_table_preview}{allow the user to preview the selected / loaded
+frequency table}
 }
 \description{
 Frequency database loader input

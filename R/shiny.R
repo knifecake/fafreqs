@@ -8,9 +8,14 @@
 #' @param allow_marker_filtering allow the user to select which markers are to
 #'   be used out of those present in the selected (or uploaded) frequency
 #'   database
-#' @param allow_scaling allow the user to scale the frequencies so that they sum up to 1
-#' @param allow_rare_allele allow the user to add an allele so that the frequencies sum up to 1
-#' @param allow_standarise_names allow the user to convert marker names to their standard form
+#' @param allow_scaling allow the user to scale the frequencies so that they sum
+#'   up to 1
+#' @param allow_rare_allele allow the user to add an allele so that the
+#'   frequencies sum up to 1
+#' @param allow_standarise_names allow the user to convert marker names to their
+#'   standard form
+#' @param allow_table_preview allow the user to preview the selected / loaded
+#'   frequency table
 #'
 #' @importFrom utils data
 #' @export
@@ -21,7 +26,8 @@ fafreqs_widget_input <- function(id,
                                  allow_marker_filtering = TRUE,
                                  allow_scaling = TRUE,
                                  allow_rare_allele = TRUE,
-                                 allow_standarise_names = TRUE) {
+                                 allow_standarise_names = TRUE,
+                                 allow_table_preview = TRUE) {
 
   # create a namespace to avoid name collisions with other modules / other
   # instances of this one
@@ -60,6 +66,8 @@ fafreqs_widget_input <- function(id,
 
   shiny::tagList(
     # Dataset input
+    if (allow_table_preview)
+      shiny::tags$p(shiny::actionLink(ns("table_preview_link"), "Preview frequency table"), class = "text-right"),
     if (allow_fafreqs_markersets)
       shiny::selectInput(ns("preset_dataset"), "Select a preset dataset", available_datasets()),
     if (allow_import_familias)
@@ -198,6 +206,26 @@ fafreqs_widget <- function(input, output, session, id) {
     total_markers <- length(markers(selected_dataset()))
     sprintf("%d out of %d markers selected", selected_markers, total_markers)
   })
+
+  # Table preview functionality
+  shiny::observeEvent(input$table_preview_link, {
+    shiny::showModal(
+      shiny::modalDialog(
+        title = "Frequency table preview",
+        easyClose = TRUE,
+        size = "l",
+        shiny::helpText("Bear in mind that frequencies are rounded in this preview but they will not be rounded for the calculations."),
+        shiny::tags$div(
+          shiny::tableOutput(session$ns("table_preview")),
+          class = "table-responsive"
+        )
+      )
+    )
+  })
+
+  output$table_preview <- shiny::renderTable({
+    as.data.frame(selected_dataset())
+  }, spacing = "xs", na = "", rownames = TRUE, striped = TRUE)
 
   # Output dataset
   dataset <- shiny::reactive({

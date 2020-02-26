@@ -23,10 +23,7 @@ ui <- fluidPage(
         style = "margin-top: 10px",
         sidebarLayout(
           sidebarPanel = sidebarPanel(
-            fafreqs_widget_input("demo_loader",
-                                 allow_scaling = TRUE,
-                                 allow_rare_allele = TRUE,
-                                 allow_marker_filtering = TRUE)),
+            fafreqs_widget_input("demo_loader", allow_table_preview = FALSE)),
           mainPanel = mainPanel(
             verbatimTextOutput("freqt_description"),
             div(
@@ -111,7 +108,7 @@ server <- function(input, output, session) {
     colnames(df)[1] <- "chr"
 
     df
-  }, striped = TRUE, rownames = TRUE, digits = 5)
+  }, striped = TRUE, rownames = TRUE, digits = 5, spacing = "xs")
 
   # frequency table description
   output$freqt_description <- renderText({
