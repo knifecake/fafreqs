@@ -16,6 +16,8 @@
 #'   standard form
 #' @param allow_table_preview allow the user to preview the selected / loaded
 #'   frequency table
+#' @param allow_waiting_option show a placeholder option before the user makes a
+#'   concious decision
 #'
 #' @importFrom utils data
 #' @export
@@ -27,11 +29,17 @@ fafreqs_widget_input <- function(id,
                                  allow_scaling = TRUE,
                                  allow_rare_allele = TRUE,
                                  allow_standarise_names = TRUE,
-                                 allow_table_preview = TRUE) {
+                                 allow_table_preview = TRUE,
+                                 allow_waiting_option = TRUE) {
 
   # create a namespace to avoid name collisions with other modules / other
   # instances of this one
   ns <- shiny::NS(id)
+
+  # prepare available datasets input
+  datasets <- available_datasets()
+  if (allow_waiting_option)
+    datasets <- c("Choose a dataset..." = "", datasets)
 
   # prepare normalisation input
   normalisation_choices <- c("Off" = "off")
@@ -69,7 +77,7 @@ fafreqs_widget_input <- function(id,
     if (allow_table_preview)
       shiny::tags$p(shiny::actionLink(ns("table_preview_link"), "Preview frequency table"), class = "text-right"),
     if (allow_fafreqs_markersets)
-      shiny::selectInput(ns("preset_dataset"), "Select a preset dataset", available_datasets()),
+      shiny::selectInput(ns("preset_dataset"), "Select a preset dataset", datasets),
     if (allow_import_familias)
       shiny::fileInput(ns("custom_fam_file"), "or load a Familias frequency file"),
     if (allow_import_csv)

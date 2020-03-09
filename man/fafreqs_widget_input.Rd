@@ -13,7 +13,8 @@ fafreqs_widget_input(
   allow_scaling = TRUE,
   allow_rare_allele = TRUE,
   allow_standarise_names = TRUE,
-  allow_table_preview = TRUE
+  allow_table_preview = TRUE,
+  allow_waiting_option = TRUE
 )
 }
 \arguments{
@@ -41,6 +42,9 @@ standard form}
 
 \item{allow_table_preview}{allow the user to preview the selected / loaded
 frequency table}
+
+\item{allow_waiting_option}{show a placeholder option before the user makes a
+concious decision}
 }
 \description{
 Frequency database loader input

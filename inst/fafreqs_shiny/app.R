@@ -23,7 +23,9 @@ ui <- fluidPage(
         style = "margin-top: 10px",
         sidebarLayout(
           sidebarPanel = sidebarPanel(
-            fafreqs_widget_input("demo_loader", allow_table_preview = FALSE)),
+            fafreqs_widget_input("demo_loader",
+                                 allow_table_preview = FALSE,
+                                 allow_waiting_option = FALSE)),
           mainPanel = mainPanel(
             verbatimTextOutput("freqt_description"),
             div(

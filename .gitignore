@@ -5,3 +5,4 @@
 
 .DS_Store
 inst/fafreqs_shiny/rsconnect/
+*.~lock*
